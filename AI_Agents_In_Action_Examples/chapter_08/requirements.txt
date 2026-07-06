@@ -1,7 +1,8 @@
 scikit-learn
 plotly
 openai
-python-dotenv
 chromadb
 langchain
+langchain_community
+langchain_text_splitters
 unstructured

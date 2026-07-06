@@ -1,36 +1,33 @@
 from openai import OpenAI
-from dotenv import load_dotenv
-import os
 import chromadb
-from langchain.document_loaders import UnstructuredHTMLLoader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_community.document_loaders import WebBaseLoader
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-# Load API key from .env file
-load_dotenv()
-api_key = os.getenv('OPENAI_API_KEY')
-# Ensure the API key is available
-if not api_key:
-    raise ValueError("No API key found. Please check your .env file.")
-client = OpenAI(api_key=api_key)
+# Load local client
+client = OpenAI(
+    base_url="http://localhost:11434/v1",
+    api_key="ollama"
+)
 
 
-def get_embedding(text, model="text-embedding-ada-002"):
+def get_embedding(text, model="nomic-embed-text"):
     text = text.replace("\n", " ")
     return client.embeddings.create(input = [text], model=model).data[0].embedding
 
 
-loader = UnstructuredHTMLLoader("sample_documents\mother_goose.html")
+url = "https://www.archives.gov/founding-docs/constitution-transcript"
+loader = WebBaseLoader(url)
 data = loader.load()
 
 text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size=100,
-    chunk_overlap=25,
+    chunk_size=500,
+    chunk_overlap=50,
     length_function=len,
     add_start_index=True,
 )
 documents = text_splitter.split_documents(data)
 # extract page content from the documents
-documents = [doc.page_content for doc in documents][100:350]  # only use 250 documents/chunks (cheaper and faster)
+documents = [doc.page_content for doc in documents]
 
 # Generate embeddings for each document
 embeddings = [get_embedding(doc) for doc in documents]
@@ -72,3 +69,24 @@ while True:
         print(f"ID:{id} TEXT: {text} SCORE: {round(score, 2)}")
 
     print("\n")
+
+# Blind tests:
+#
+# 1. "What are the requirements to become the President?"
+# Perfect match. Successfully found the exact passage 
+# stating the age limit (35) and natural-born citizen requirement (score 0.62).
+#
+# 2. "Can the government censor newspapers or bad speech?"
+# Weak matches. Model showed generic text about government secrecy
+# and congressional speech immunity (0.84 - 0.90)
+# Original USA constitution conscript does not contain the Bill of Rights.
+#
+# 3. "Who has the power to declare war?"
+# Missed the exact answer. It retrieved generic sections about 
+# treaties and states engaging in war (0.71 - 0.73), but missed the 
+# explicit section giving Congress the power to declare war
+# Possible reason - model struggled with the linguistic gap
+# between modern phrasing and archaic 18th-century legal syntax.
+#
+# Summary: Chunking big document into pieces won't help,
+# if there are no additional context and documents.
