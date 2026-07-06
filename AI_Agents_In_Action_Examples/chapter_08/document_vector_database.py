@@ -59,3 +59,8 @@ while True:
 # b) "take a look and watch sky" query gave ~0.57 score
 # c) "look and watch sky" query gave ~0.57 score (identical to previous)
 # d) "sky" query gave ~0.46 score
+#
+# 3. Search for exact sentence will give full score without any doubt.
+# i.e. search "The sky is blue and beautiful."
+# 
+# My conclusions are similar to book author's comment

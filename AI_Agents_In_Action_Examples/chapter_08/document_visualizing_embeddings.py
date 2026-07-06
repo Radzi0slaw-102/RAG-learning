@@ -2,18 +2,14 @@ from openai import OpenAI
 import numpy as np
 from sklearn.decomposition import PCA
 import plotly.graph_objects as go
-from dotenv import load_dotenv
-import os
 
-# Load API key from .env file
-load_dotenv()
-api_key = os.getenv('OPENAI_API_KEY')
-# Ensure the API key is available
-if not api_key:
-    raise ValueError("No API key found. Please check your .env file.")
-client = OpenAI(api_key=api_key)
+# Load local client
+client = OpenAI(
+    base_url="http://localhost:11434/v1",
+    api_key="ollama"
+)
 
-def get_embedding(text, model="text-embedding-ada-002"):
+def get_embedding(text, model="nomic-embed-text"):
     text = text.replace("\n", " ")
     return client.embeddings.create(input = [text], model=model).data[0].embedding
 
@@ -26,7 +22,9 @@ documents = [
     "I love green eggs, ham, sausages and bacon!",
     "The brown fox is quick and the blue dog is lazy!",
     "The sky is very blue and the sky is very beautiful today",
-    "The dog is lazy but the brown fox is quick!"
+    "The dog is lazy but the brown fox is quick!",
+    "Sentence that won't have any similarity to others, I swear.",
+    "The industrial revolution completely transformed manufacturing processes."
 ]
 
 # Generate embeddings for each document
@@ -65,3 +63,8 @@ fig.update_layout(title="3D Plot of Document Embeddings",
                   ))
 
 fig.show()
+
+# Conclusion:
+# In fact, the last sentence was designed to be separated from others on 3D axis.
+# Because the semantic gap is prioritized, the remaining sentences tend to lose their
+# relative contrastand tightly clump together into a single, compressed cloud.
