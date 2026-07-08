@@ -26,8 +26,10 @@ queries = {}
 qrels = {}
 
 if dataset_mode == "custom":
-    if not os.path.exists("documents.txt") or not os.path.exists("test_queries.txt"):
-        print("Error: 'documents.txt' or 'test_queries.txt' missing in current directory.")
+    required_files = ["documents.txt", "test_queries.txt", "qrels.txt"]
+    missing = [f for f in required_files if not os.path.exists(f)]
+    if missing:
+        print(f"Error: missing required file(s): {', '.join(missing)}")
         sys.exit(1)
     
     with open("documents.txt", "r", encoding="utf-8") as f:
@@ -37,12 +39,23 @@ if dataset_mode == "custom":
     
     for i, text in enumerate(docs_lines):
         corpus[f"doc_{i}"] = {"title": "", "text": text}
-    
-    # When custom dataset is loaded, qrels mapping assumes a synthetic 1:1 round-robin relationship, 
-    # where each query matches exactly one document wrapping around the document list length
     for i, text in enumerate(queries_lines):
         queries[f"query_{i}"] = text
-        qrels[f"query_{i}"] = {f"doc_{i % len(docs_lines)}": 1}
+    
+    with open("qrels.txt", "r", encoding="utf-8") as f:
+        for line_num, line in enumerate(f, start=1):
+            line = line.strip()
+            if not line:
+                continue
+            parts = line.split("\t")
+            if len(parts) != 2:
+                print(f"Warning: skipping malformed qrels.txt line {line_num}: {line!r}")
+                continue
+            q_idx, d_idx = parts
+            qrels.setdefault(f"query_{q_idx}", {})[f"doc_{d_idx}"] = 1
+    
+    for i in range(len(queries_lines)):
+        qrels.setdefault(f"query_{i}", {})
         
 elif dataset_mode == "beir":
     # Fetch, extract and structure standard BEIR nechmark files by built-in data loader
