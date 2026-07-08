@@ -1,0 +1,1 @@
+To run semantic_search_exp.py, you need to create .env file with HF_TOKEN=hf_... content.
