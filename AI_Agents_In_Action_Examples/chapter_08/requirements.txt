@@ -1,0 +1,8 @@
+scikit-learn
+plotly
+openai
+chromadb
+langchain
+langchain_community
+langchain_text_splitters
+unstructured

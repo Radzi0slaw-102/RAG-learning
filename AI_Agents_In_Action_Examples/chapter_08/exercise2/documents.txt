@@ -1,0 +1,474 @@
+The sky is blue and beautiful.
+Love this blue and beautiful sky!
+The quick brown fox jumps over the lazy dog.
+A king's breakfast has sausages, ham, bacon, eggs, toast, and beans
+I love green eggs, ham, sausages and bacon!
+The brown fox is quick and the blue dog is lazy!
+The sky is very blue and the sky is very beautiful today
+The dog is lazy but the brown fox is quick!
+Sentence that won't have any similarity to others, I swear.
+The green grass grows near the blue lake.
+A beautiful bird sings in the blue sky.
+He loves bacon but hates green eggs.
+The quick rabbit outran the brown fox.
+A lazy cat sleeps on the beautiful rug.
+Sausages and toast make a great breakfast.
+The dog barked at the quick fox.
+The sky turned grey and less beautiful.
+Ham and eggs are on the breakfast menu.
+The lazy brown bear watched the quick dog.
+An emperor rules the kingdom from a golden throne.
+The royal palace hosts a magnificent morning feast.
+Ocean waves crash against the golden sand.
+An azure ceiling covers the sunny morning landscape.
+The swift cinnamon predator leaped across the field.
+A sleepy hound rests by the warm fireplace.
+Pork belly and poultry are served with coffee.
+Monarchs enjoy luxury dining in the great hall.
+The emerald lawn requires water every single day.
+A majestic eagle soars high above the clouds.
+The chef prepared a meal with pork and bread.
+Computers process digital data at incredible speeds.
+Software engineers write complex code for mobile applications.
+Artificial intelligence algorithms analyze massive datasets.
+A regular smartphone has more power than old computers.
+Data science requires programming skills and mathematical logic.
+Cybersecurity experts protect networks from malicious hackers.
+Cloud computing allows remote storage of heavy files.
+Machine learning models predict future stock market trends.
+Quantum computing represents the next digital revolution.
+The internet connects millions of servers worldwide.
+A heavy rain started falling from the dark clouds.
+Thunder rumbled across the valley during the storm.
+Lightning flashed brightly, illuminating the entire room.
+Strong winds blew the autumn leaves off the trees.
+Weather forecasts predict a very hot summer week.
+Climate change affects global temperature and sea levels.
+Winter brings cold snow and freezing temperatures.
+Umbrellas are useful when a sudden shower begins.
+The autumn forest is full of colorful leaves.
+Nature provides clean air and fresh water resources.
+A yardstick is 3 feet long.
+These shoes are just way too large.
+We will make a snowman this winter.
+He adds something different to the team.
+He showed us how to snap the pencil.
+My dad never works on the weekends.
+I brush my teeth and comb my hair.
+Welcome to the big leagues.
+I make my own yogurt.
+Mother doesn't make things up.
+When I am hungry, I eat food.
+We were on the lake yesterday.
+Truth is the daughter of time.
+My mattress is too hard.
+I want to stand up.
+We weren't in the best place.
+My big sister washes her hair every morning.
+I got scammed on Ebay.
+You know what I mean.
+The big building was blazing with lights.
+I feel bad for telling him to wait.
+Mary pointed at one of the names on the list.
+I only eat glazed donuts.
+Tom has big plans.
+Land is good.
+There is nobody else I could go with.
+Terrible loss comes with terrible grief.
+I am dirt poor.
+You must have your passport to enter.
+The first baseman caught the fly ball.
+The pack of candles was ready on the table.
+It was their favorite store to shop at.
+Tom is really tall.
+Everyone likes pepperoni pizza.
+She wished she could speak Italian.
+This problem is much bigger than we thought.
+The gang's all her.
+They make great walking buddies.
+Water freezes at a very cold temperature.
+These dancers are like family.
+I want to ask them when their big day is.
+I'm sure he meant to do that.
+There comes a bus.
+I wish I had never gone surfing that day.
+In Australia, McDonald's is called Maccas.
+Her fiancé gave her a very shiny ring.
+I go to the bathroom.
+I’m scared that he won’t ever come home.
+I've got a list.
+I have the list.
+There's nobody out there.
+The sun rises at the east.
+You matter to me.
+A penny saved is a penny earned.
+I really need to lose some weight.
+He thinks he is very handsome.
+We are coming up to it.
+I do not want to smoke.
+He has quite a few friends.
+That guy's got an ugly face.
+The more I eat the bigger my appetite gets.
+I made bacon.
+The jar of candles was ready on the table.
+She had a big, radiant smile.
+I just saw the weirdest sidewalk.
+The library was quiet until we got here.
+They make wonderful walking buddies.
+I can do what you said.
+I always felt a connection with you.
+He’s as mad as a hornet.
+I love eating pavlova on Christmas day.
+I like rice and beans for dinner.
+Sarah's coffee had started to cool down.
+I'm going to see a movie.
+I am the designated survivor.
+I’m absolutely sure.
+I do not eat meat.
+Diamonds are forever.
+You should eat them.
+We can go to the museum.
+I like the smell of rain.
+Albert Einstein was kind of smart.
+It's the size of a golf ball.
+My goal is to save lives, not cost them.
+Don't blame her for her own death.
+My sweater got caught on the door hinge.
+The White House is important.
+It’s as dry as a bone.
+The train does not leave at 8AM.
+I am extra ticklish for some reason.
+She graduated high school in 2003.
+An earthquake occurred in Tokyo.
+He goes to school.
+I stepped on a corn flake.
+The gorilla beat his chest.
+He knows it inside out.
+It took quite a while.
+His last play was a big hit.
+That's a pretty big fish you've just caught.
+Danny drank the juice.
+We can go to Paris.
+Anne likes to visit her aunt in Oklahoma.
+I have 10 hair straighteners.
+I will put my food on the placemat.
+I've got too much work to do.
+We are all in favor of this plan.
+Those are big watermelons.
+My turtle can be opinionated.
+Penguins live in Antarctica.
+We are going to have the best day.
+The doctor diagnosed her with diabetes.
+You can never turn the clock back.
+I’ll do it right away.
+The siblings could help each other.
+I love frozen yogurt.
+He found my lecture very interesting.
+They will arrive in an hour.
+We should hang soon.
+Mr. White went to the store last night.
+I smelled the fragrance of garlic cooking.
+What we had was a total lie.
+She whispered into the girl's ear.
+It’s as clear as mud.
+I want to talk about something.
+The river flows so fast.
+The wall had fresh paint on it.
+That is a great idea.
+It's currently raining.
+I didn't want to make a big deal about it.
+Space grey is a weird color.
+This company's profit margin is very big.
+These shoes are just way too large.
+He is younger than I am.
+I only eat fish.
+She had five piercings in each ear.
+They sleep in the afternoon.
+The tree was struck by lightning.
+That park does not have a soccer field.
+The fire alarm was broken, but nobody knew.
+The girl in red is his girlfriend.
+I am a groom.
+Perhaps you should've gotten a bigger one.
+This is only the beginning.
+It takes two to tango.
+He catches the train every morning.
+Bigger doesn't always mean better.
+There is nothing else I'd rather be doing.
+That's a bit of an exaggeration.
+I wonder why they left my name off the list.
+I’m debating between option A and option B.
+Plenty of tourists visit the area in summer.
+He recommended the scary book to me.
+I’m also too poor to afford a real office.
+I hope the dog doesn't slobber on me.
+I am filthy rich.
+Let's hang out soon.
+Peter's cottage is very nice.
+He's a good bloke.
+This radio is no bigger than a matchbox.
+It's so expensive I want to die.
+He drew all over his yearbook.
+Their efforts embarrassed them.
+I’m excited about the future.
+The spa was called Blue Mercury.
+The parents were smiling from ear to ear.
+Tom's name was at the top of the list.
+You were right.
+He was dressed for work.
+He writes meaningless letters.
+You can’t know what she is feeling.
+She’s as stubborn as a mule.
+The eggs are sold by the dozen.
+Tom had a wide smile on his face.
+I take ten minutes to get there.
+Tokyo is bigger than Rome.
+It usually rains every day here.
+I don't think I liked the movie.
+Allergies made him sneeze a lot.
+I want to have a pink bed this year.
+The Chicago Bulls won six championships.
+This is too big for one person to carry.
+She felt sad for no real reason.
+My dad makes yogurt a lot.
+All that glitters is not gold.
+She went over to see if her name was there.
+They are so loud.
+Parenting is awesome.
+The peanut butter jar was hard to open.
+Your house is beautiful.
+Tom has some pretty big shoes to fill.
+She wished applying for jobs was easier.
+This shoe is a size bigger.
+I wish Ubers weren't so expensive.
+The woman wasn't replying to her emails.
+I have the flowers.
+Daya chose a song from the list to sing.
+Their hot chocolate was very mediocre.
+Strawberries are in season.
+Tom is already on top of it.
+I have a crush on Albert.
+Beauty is in the eyes of the beholder.
+There is a hefty ransom.
+His speech covered many subjects.
+I like asparagus and brussel sprouts.
+I was sweaty in front of my entire class.
+I went to the dentist for a check-up.
+There was a rock concert in 1970.
+He would snore loudly during his nap.
+You are more than just your shopping cart.
+He stopped to smell the flower.
+I raised my hand to ask a question.
+Mike likes dogs.
+It’s as good as new.
+She had a black thumb.
+He's trying to protect everyone.
+Today we are going to hear a report.
+They can be divided into three groups.
+I've made a list of things I'd like to buy.
+The chickadee sat on her windowsill.
+The blacksmith makes old-fashioned swords.
+I'm always on time.
+I am hungry.
+Soccer is the devil's sport.
+It rather suprised me.
+I am going to make my bed first.
+You have some schoolwork to do.
+They painted the coffee shop ceiling black.
+The bus went roaring by her window at 6 am.
+You have to share it with other tenants.
+Uncle Joe gave me a red toy truck.
+I put on my slippers.
+A balanced diet is a cookie in each hand.
+The Avengers series is basically over.
+he has skipped school on many occasions.
+The cruise cut through the Bermuda Triangle.
+She sells Christmas trees.
+They will arrive in half an hour.
+The church has pretty windows.
+We will walk in the garden later.
+I was called into the office first.
+This is exactly for one person to carry.
+My efforts resulted in nothing.
+We have group fitness classes.
+It’s right around the corner.
+The swan is a beautiful bird.
+He is my grandfather.
+Japanese tourists abroad are big spenders.
+It's packed.
+My boss would have a big problem with that.
+She is a composer for the harp.
+Tinder doesn't work.
+He ran his horse up the hill.
+Avocados are nasty.
+Oysters are slimy.
+I made roast beef.
+There was a list of available candidates.
+Knowledge is power.
+Money is no more than our servant.
+The Earth is spherical.
+She was very tired and frustrated.
+Being fashionable is a lot of work.
+Cows eat grass.
+He's always at home on Sundays.
+Her fridge was very old.
+I'm going to do you a favor.
+I'm not sure if there is a meaning to life.
+His liver was failing.
+It’s as quick as lightning.
+Sue was her favorite classmate.
+I'm so hungry.
+Blood is thicker than water.
+I broke my computer.
+Steve jumped in.
+They're not any fans of mine.
+She doesn’t use a computer.
+That’ll have to wait.
+I want chocolate.
+The car was a fun spot to sit on.
+That is fake news.
+It could possibly become a big problem.
+I am a vegan.
+The Avengers should start over.
+You don't need to leave so early.
+We're no different from anyone else.
+It’s around three hours long.
+I want to be married.
+Meg has some pretty big shoes to fill.
+They're not big fans of mine.
+He is opening the door.
+I've got rough hands.
+I love my high school friends.
+Babies are so cute but fragile.
+If you go there, you will find him.
+She spread the bread with socks.
+I am here for you.
+He is a smart boy.
+We're coming to get you.
+It's a big country, Tom.
+Tom pointed at one of the names on the list.
+I've got to shave before work.
+It's so hot.
+Racecar backwards is racecar.
+I had so much hope in the beginning.
+My hair curler is broken.
+I wish Star Wars had a happier plot.
+Fascism is the real enemy.
+She gave me a dirty look.
+It’s as old as the hills.
+This horse has beautiful eyes.
+It smells very delicious in the kitchen.
+The kids were smiling from ear to ear.
+It wasn't any bigger than a soccer ball.
+It's raining outside.
+They are still edible.
+You can tell that the horse is fast.
+There is a chair below the window.
+I don’t think you did a good enough job.
+She hopes to get a job.
+She raised her hand to ask a question.
+We have a bigger problem than we thought.
+My phone died in the middle of the concert.
+He made his way through the forest.
+His boss might get angry with him.
+He’s stretching the truth.
+You're the worst person I know.
+You look especially nice tonight.
+These actors are like family.
+You should never lie.
+Here's a topographical map of Germany.
+I like veggies too.
+I dressed as a fairy last Halloween.
+I don't like desk lamps.
+Malala Yousafzai got married yesterday.
+I wanted to do well in the interview.
+I was bored to death in the middle of class.
+Anakin and Padme belong together.
+It is just what I need.
+He is respectful to his elders.
+We are completely in love.
+I turn off the light.
+He was dressed like a bear.
+You don't need 20 captains.
+The sooner I get to bed the better.
+Nobody is out there trying to be happy.
+Dancing with you is so carefree.
+I need a dollar for the vending machine.
+The rabbit leaped over the tiny fence.
+I just ran by the church.
+The fossil belongs to a fish.
+My computer gets really heavy after a while.
+They're almost three times as big as we are.
+I’d like to be catcalled.
+She’s now wearing headphones.
+She doesn’t teach chemistry.
+Brandon is already on top of it.
+Bonds are safer.
+He has the ability to carry out big plans.
+A turkey is a little bigger than a chicken.
+George works on a small farm.
+He plays the violin as well as the fiddle.
+I have nowhere to go.
+I haven’t been invited.
+The pig put his snout through the fence.
+Tom didn't want to take such a big risk.
+Our past is important to remember.
+She got her panties in a wad.
+She was shaking like a chihuahua.
+You may choose what to eat from this list.
+He graduated high school in 2007.
+You're suffering from allergies.
+I don't like visiting cities.
+Things aren't always easy.
+I’m rather fond of him.
+She is mean but so pretty.
+She wished she had taken the other job.
+The roof leaks every time it rains.
+I am doing business.
+They could be together.
+She washed it.
+You’re a fantastic cook.
+I’ll talk to him first thing in the morning.
+We've got a major job ahead of us.
+Lions and tigers are called big cats.
+Her grandmother gave her the bracelet.
+A new movie is better than an old one.
+Tom would have a big problem with that.
+I made very short work of the big steak.
+I miss my boyfriend.
+I want to plug my ears.
+When you enter a room, smile and say hello.
+I am just extremely proud of him.
+I love my college friends.
+Her expression was unreadable.
+I drink when I am thirsty.
+I took some photos of our lunch.
+The editor the newspaper hired laughed.
+Water damage sucks.
+She always forgets her purse.
+I'm sure Tom's name isn't on the list.
+I just walked on the lamest window.
+I have a surprise for you.
+Being fashionable is pointless.
+She was beaming.
+This is the biggest car in the world.
+I got a new cat.
+The planet hadn't yet been discovered.
+My water bottle is white and made of steel.
+There are so many things to consider.
+I won’t say anything until you tell him.
+I got the money back.
+It does nothing for me.
+My dad bought half a cow.
+I don’t get you.
+You're the best person I know.
+My watch is faster than yours.
+It’s a significant promise.
+I have no money at the moment.
+We had a snow storm last weekend.
+I just took a nap.
+He has made a big improvement in tennis.
+He's an agent for a big insurance company.
+No, I can't clean your house It's too big!.
+You make me so happy.
+He went fast downhill on his sled.

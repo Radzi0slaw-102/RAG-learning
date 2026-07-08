@@ -1,0 +1,230 @@
+-------------------------------------------------------------------
+I. Base building times
+-------------------------------------------------------------------
+  TF-IDF      : 5.90 ms
+  Word2Vec    : 6.50 ms
+  BERT API    : 1408.30 ms
+
+-------------------------------------------------------------------
+II. Per-query details  (total: 30 queries)
+-------------------------------------------------------------------
+
+[beautiful blue sky]
+  TF-IDF     top1: 0.8559 | The sky is blue and beautiful.                          | 2.56 ms
+  Word2Vec   top1: 0.9839 | The sky is blue and beautiful.                          | 0.56 ms
+  BERT API   top1: 0.9098 | The sky is blue and beautiful.                          | 178.89 ms
+
+[quick brown fox]
+  TF-IDF     top1: 0.6795 | The quick rabbit outran the brown fox.                  | 1.76 ms
+  Word2Vec   top1: 0.9862 | The lazy brown bear watched the quick dog.              | 0.45 ms
+  BERT API   top1: 0.7430 | The dog is lazy but the brown fox is quick!             | 174.79 ms
+
+[breakfast eggs and bacon]
+  TF-IDF     top1: 0.5894 | A king's breakfast has sausages, ham, bacon, eggs, toas | 1.80 ms
+  Word2Vec   top1: 0.9551 | I love green eggs, ham, sausages and bacon!             | 0.46 ms
+  BERT API   top1: 0.7180 | Ham and eggs are on the breakfast menu.                 | 192.85 ms
+
+[royal morning]
+  TF-IDF     top1: 0.5396 | The royal palace hosts a magnificent morning feast.     | 1.84 ms
+  Word2Vec   top1: 0.9210 | The royal palace hosts a magnificent morning feast.     | 0.45 ms
+  BERT API   top1: 0.6060 | The royal palace hosts a magnificent morning feast.     | 176.89 ms
+
+[azure ceiling]
+  TF-IDF     top1: 0.5485 | An azure ceiling covers the sunny morning landscape.    | 1.77 ms
+  Word2Vec   top1: 0.9784 | An azure ceiling covers the sunny morning landscape.    | 0.43 ms
+  BERT API   top1: 0.6575 | An azure ceiling covers the sunny morning landscape.    | 175.85 ms
+
+[swift cinnamon predator]
+  TF-IDF     top1: 0.7022 | The swift cinnamon predator leaped across the field.    | 1.68 ms
+  Word2Vec   top1: 0.9636 | The swift cinnamon predator leaped across the field.    | 0.41 ms
+  BERT API   top1: 0.7044 | The swift cinnamon predator leaped across the field.    | 170.21 ms
+
+[sleepy hound]
+  TF-IDF     top1: 0.5872 | A sleepy hound rests by the warm fireplace.             | 1.69 ms
+  Word2Vec   top1: 0.9828 | A sleepy hound rests by the warm fireplace.             | 0.42 ms
+  BERT API   top1: 0.6088 | A sleepy hound rests by the warm fireplace.             | 185.22 ms
+
+[emerald lawn]
+  TF-IDF     top1: 0.5783 | The emerald lawn requires water every single day.       | 1.83 ms
+  Word2Vec   top1: 0.9822 | The emerald lawn requires water every single day.       | 0.48 ms
+  BERT API   top1: 0.5694 | The emerald lawn requires water every single day.       | 172.22 ms
+
+[digital data]
+  TF-IDF     top1: 0.5349 | Computers process digital data at incredible speeds.    | 1.81 ms
+  Word2Vec   top1: 0.9769 | Computers process digital data at incredible speeds.    | 0.43 ms
+  BERT API   top1: 0.6631 | Computers process digital data at incredible speeds.    | 172.85 ms
+
+[malicious hackers]
+  TF-IDF     top1: 0.5571 | Cybersecurity experts protect networks from malicious h | 1.73 ms
+  Word2Vec   top1: 0.9927 | Cybersecurity experts protect networks from malicious h | 0.42 ms
+  BERT API   top1: 0.5879 | Cybersecurity experts protect networks from malicious h | 186.00 ms
+
+[sudden shower]
+  TF-IDF     top1: 0.5754 | Umbrellas are useful when a sudden shower begins.       | 1.79 ms
+  Word2Vec   top1: 0.9836 | Umbrellas are useful when a sudden shower begins.       | 0.44 ms
+  BERT API   top1: 0.5376 | Umbrellas are useful when a sudden shower begins.       | 174.74 ms
+
+[heavy rain storm]
+  TF-IDF     top1: 0.4242 | A heavy rain started falling from the dark clouds.      | 1.74 ms
+  Word2Vec   top1: 0.9303 | A heavy rain started falling from the dark clouds.      | 0.44 ms
+  BERT API   top1: 0.6806 | A heavy rain started falling from the dark clouds.      | 175.82 ms
+
+[royal palace feast]
+  TF-IDF     top1: 0.7191 | The royal palace hosts a magnificent morning feast.     | 1.65 ms
+  Word2Vec   top1: 0.9833 | The royal palace hosts a magnificent morning feast.     | 0.42 ms
+  BERT API   top1: 0.7648 | The royal palace hosts a magnificent morning feast.     | 177.81 ms
+
+[The swift predator jumps over the cat.]
+  TF-IDF     top1: 0.4449 | The swift cinnamon predator leaped across the field.    | 1.81 ms
+  Word2Vec   top1: 0.9866 | The rabbit leaped over the tiny fence.                  | 0.45 ms
+  BERT API   top1: 0.6552 | The swift cinnamon predator leaped across the field.    | 193.49 ms
+
+[Computers use artificial intelligence and software.]
+  TF-IDF     top1: 0.3563 | Artificial intelligence algorithms analyze massive data | 1.85 ms
+  Word2Vec   top1: 0.9167 | Artificial intelligence algorithms analyze massive data | 0.47 ms
+  BERT API   top1: 0.5632 | Artificial intelligence algorithms analyze massive data | 177.74 ms
+
+[A golden throne in the royal palace.]
+  TF-IDF     top1: 0.4228 | The royal palace hosts a magnificent morning feast.     | 1.82 ms
+  Word2Vec   top1: 0.9292 | Ocean waves crash against the golden sand.              | 0.44 ms
+  BERT API   top1: 0.6372 | An emperor rules the kingdom from a golden throne.      | 178.03 ms
+
+[Heavy rain and lightning during the autumn storm.]
+  TF-IDF     top1: 0.3397 | Thunder rumbled across the valley during the storm.     | 1.80 ms
+  Word2Vec   top1: 0.9268 | Thunder rumbled across the valley during the storm.     | 0.47 ms
+  BERT API   top1: 0.6268 | A heavy rain started falling from the dark clouds.      | 176.71 ms
+
+[Monarchs love a great morning breakfast in luxury.]
+  TF-IDF     top1: 0.5410 | Monarchs enjoy luxury dining in the great hall.         | 1.68 ms
+  Word2Vec   top1: 0.9335 | Monarchs enjoy luxury dining in the great hall.         | 0.43 ms
+  BERT API   top1: 0.6474 | The royal palace hosts a magnificent morning feast.     | 181.32 ms
+
+[The azure sky is very beautiful today.]
+  TF-IDF     top1: 0.7698 | The sky is very blue and the sky is very beautiful toda | 1.72 ms
+  Word2Vec   top1: 0.9909 | The sky is very blue and the sky is very beautiful toda | 0.44 ms
+  BERT API   top1: 0.6176 | The sky is very blue and the sky is very beautiful toda | 179.26 ms
+
+[sky]
+  TF-IDF     top1: 0.5733 | The sky is very blue and the sky is very beautiful toda | 1.81 ms
+  Word2Vec   top1: 0.9811 | The sky turned grey and less beautiful.                 | 0.44 ms
+  BERT API   top1: 0.5675 | The sky is blue and beautiful.                          | 178.86 ms
+
+[bacon]
+  TF-IDF     top1: 0.7455 | I made bacon.                                           | 1.74 ms
+  Word2Vec   top1: 0.9603 | He loves bacon but hates green eggs.                    | 0.42 ms
+  BERT API   top1: 0.7444 | I made bacon.                                           | 187.14 ms
+
+[computers]
+  TF-IDF     top1: 0.3782 | Computers process digital data at incredible speeds.    | 1.71 ms
+  Word2Vec   top1: 0.9050 | A regular smartphone has more power than old computers. | 0.41 ms
+  BERT API   top1: 0.5384 | Computers process digital data at incredible speeds.    | 188.34 ms
+
+[storm]
+  TF-IDF     top1: 0.4475 | We had a snow storm last weekend.                       | 1.64 ms
+  Word2Vec   top1: 0.9308 | We had a snow storm last weekend.                       | 0.41 ms
+  BERT API   top1: 0.5025 | Thunder rumbled across the valley during the storm.     | 178.44 ms
+
+[king]
+  TF-IDF     top1: 0.3659 | A king's breakfast has sausages, ham, bacon, eggs, toas | 1.67 ms
+  Word2Vec   top1: 0.0000 | The sky is blue and beautiful.                          | 0.43 ms
+  BERT API   top1: 0.4559 | A king's breakfast has sausages, ham, bacon, eggs, toas | 179.76 ms
+
+[fox]
+  TF-IDF     top1: 0.4198 | The dog barked at the quick fox.                        | 1.70 ms
+  Word2Vec   top1: 0.9861 | The quick brown fox jumps over the lazy dog.            | 0.42 ms
+  BERT API   top1: 0.5340 | The brown fox is quick and the blue dog is lazy!        | 188.59 ms
+
+[monarch]
+  TF-IDF     top1: 0.0000 | The sky is blue and beautiful.                          | 1.69 ms
+  Word2Vec   top1: 0.0000 | The sky is blue and beautiful.                          | 0.44 ms
+  BERT API   top1: 0.4288 | An emperor rules the kingdom from a golden throne.      | 175.31 ms
+
+[cloud]
+  TF-IDF     top1: 0.3783 | Cloud computing allows remote storage of heavy files.   | 1.77 ms
+  Word2Vec   top1: 0.9467 | Cloud computing allows remote storage of heavy files.   | 0.44 ms
+  BERT API   top1: 0.5847 | Cloud computing allows remote storage of heavy files.   | 177.19 ms
+
+[laziness]
+  TF-IDF     top1: 0.0000 | The sky is blue and beautiful.                          | 1.75 ms
+  Word2Vec   top1: 0.0000 | The sky is blue and beautiful.                          | 0.43 ms
+  BERT API   top1: 0.3348 | The brown fox is quick and the blue dog is lazy!        | 191.46 ms
+
+[football]
+  TF-IDF     top1: 0.0000 | The sky is blue and beautiful.                          | 1.69 ms
+  Word2Vec   top1: 0.0000 | The sky is blue and beautiful.                          | 0.43 ms
+  BERT API   top1: 0.5063 | Soccer is the devil's sport.                            | 175.39 ms
+
+[void]
+  TF-IDF     top1: 0.0000 | The sky is blue and beautiful.                          | 1.77 ms
+  Word2Vec   top1: 0.0000 | The sky is blue and beautiful.                          | 0.44 ms
+  BERT API   top1: 0.2970 | He writes meaningless letters.                          | 177.78 ms
+
+-------------------------------------------------------------------
+III. Aggregate quality statistics (best score per query)
+-------------------------------------------------------------------
+  TF-IDF    : avg=0.4691  min=0.0000  max=0.8559  queries with score=0: 4/30
+  Word2Vec  : avg=0.8005  min=0.0000  max=0.9927  queries with score=0: 5/30
+  BERT API  : avg=0.5998  min=0.2970  max=0.9098  queries with score=0: 0/30
+
+-------------------------------------------------------------------
+IV. Aggregate search time statistics
+-------------------------------------------------------------------
+  TF-IDF    : avg=1.78 ms  min=1.64 ms  max=2.56 ms
+  Word2Vec  : avg=0.44 ms  min=0.41 ms  max=0.56 ms
+  BERT API  : avg=179.96 ms  min=170.21 ms  max=193.49 ms
+
+  (Summary as reported by the script itself):
+    TF-IDF    : 1.78 ms
+    Word2Vec  : 0.44 ms
+    BERT API  : 179.96 ms
+
+-------------------------------------------------------------------
+V. Ranking agreement (does the best sentences match)
+-------------------------------------------------------------------
+  TF-IDF   vs BERT API: 18/30 queries (60.0%)
+  Word2Vec vs BERT API: 14/30 queries (46.7%)
+
+-------------------------------------------------------------------
+VI. Quick takeaway (quality vs. time cost)
+-------------------------------------------------------------------
+  TF-IDF    : quality=0.469  time=1.78 ms  quality/ms=0.26412
+  Word2Vec  : quality=0.800  time=0.44 ms  quality/ms=1.81701
+  BERT API  : quality=0.600  time=179.96 ms  quality/ms=0.00333
+
+-------------------------------------------------------------------
+VII. Summary and remarks
+-------------------------------------------------------------------
+1. Search latency shows a stark trade-off: TF-IDF (avg 1.78 ms) and Word2Vec
+(avg 0.44 ms) are essentially free computationally, while BERT API averages
+179.96 ms - roughly 100-400x slower. This gap comes from BERT API relying on
+a network call to an external inference endpoint, whereas TF-IDF and Word2Vec
+run entirely locally against precomputed vectors. This makes the comparison
+somewhat unfair to BERT API: it is penalized by network overhead unrelated to
+the quality of its embeddings, and it also risks external failures (timeouts,
+rate limits) that the local methods cannot experience.
+
+2. Regarding quality, Word2Vec's high average score (0.80) is misleading. It
+never truly fails to produce a "confident-looking" number for multi-word
+queries (word-vector averaging smooths over gaps), but drops to 0.00 on five
+single-word queries whose words weren't in the training vocabulary (e.g.
+"monarch", "laziness", "football", "void").
+TF-IDF shows the same behavior (4 zero-scores)since it depends on exact vocabulary overlap.
+BERT API never returns 0.0000 - it always produces a semantically meaningful
+(if sometimes weak) score, since it generalizes beyond the local vocabulary.
+
+3. Query length matters: for short phrases, all three methods usually agree
+(e.g. "royal morning", "azure ceiling"). For full sentences, agreement drops
+as paraphrased or reordered content confuses TF-IDF's bag-of-words approach.
+For single words, TF-IDF/Word2Vec either overfit to one keyword's context or
+fail outright, while BERT API remains the only method producing sensible
+results for abstract or unseen terms like "void" or "football".
+
+Overall:
+- TF-IDF is fast and interpretable but fragile for paraphrases;
+- Word2Vec is fastest and often accurate but binary in failure mode;
+- BERT API is the most robust semantically but at a heavy, network-bound latency
+cost, and comparing it head-to-head on raw speed against local methods isn't
+entirely fair.
+I should apologize, as I have set the target to have at least one method be
+called from external API, but I didn't consider network speed influence and
+I assumed both TF-IDF and Word2Vec are too simple to meet my criteria.
