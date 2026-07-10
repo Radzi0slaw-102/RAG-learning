@@ -21,7 +21,7 @@ for i, chunk in enumerate(dataset):
     print(f'Added chunk {i+1}/{len(dataset)} to the database')
 
 
-def retrieve(query, top_n=3):
+def retrieve(query, top_n=3, min_similarity=0.4):
     query_embedding = ollama.embed(model=EMB_MODEL, input=query)['embeddings'][0]
     
     similarities = []
@@ -30,7 +30,7 @@ def retrieve(query, top_n=3):
         similarities.append((chunk, similarity))
     
     similarities.sort(key=lambda x: x[1], reverse=True)
-    return similarities[:top_n]
+    return [(c, s) for c, s in similarities[:top_n] if s >= min_similarity]
 
 input_query = input('Ask me a question: ')
 retrieved_knowledge = retrieve(input_query)
@@ -48,6 +48,7 @@ instruction_prompt = f'''You are a helpful chatbot.
 Use only the following pieces of context to answer the question. Don't make up any new information:
 {context_block}
 
+If there is no given context, say that there was no suitable information and you just don't know.
 Respond in the same language as the user's question, even if the context above is in a different language.'''
 
 # ensure LLM will respond in the same language as given question
@@ -61,7 +62,10 @@ stream = ollama.chat(
     messages=[
         {'role': 'system', 'content': instruction_prompt},
         {'role': 'user', 'content': user_prompt}
-    ]
+    ],
+    stream=True,
 )
 
-print(f'Response: {stream.message.content}')
+print("Response:")
+for chunk in stream:
+    print(chunk.message.content, end='', flush=True)
