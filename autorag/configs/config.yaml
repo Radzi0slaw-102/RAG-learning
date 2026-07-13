@@ -42,3 +42,17 @@ node_lines:
             batch: 1
             api_base: http://localhost:11434/v1
             api_key: "ollama"
+          - module_type: llama_index_llm
+            llm: openailike
+            model: qwen2.5:0.5b
+            temperature: [ 0.1, 0.5, 1.0 ]
+            batch: 1
+            api_base: http://localhost:11434/v1
+            api_key: "ollama"
+          - module_type: llama_index_llm
+            llm: openailike
+            model: llama3.2:1b
+            temperature: [ 0.1, 0.5, 1.0 ]
+            batch: 1
+            api_base: http://localhost:11434/v1
+            api_key: "ollama"

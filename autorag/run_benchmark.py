@@ -46,21 +46,36 @@ def main():
     parser.add_argument("--qa-data", required=True, help="QA parquet path")
     parser.add_argument("--corpus", required=True, help="Corpus parquet path")
     parser.add_argument("--project-dir", required=True, help="Output directory for all runs")
-    parser.add_argument("--models", nargs="+", required=True, help="Ollama model names to benchmark")
     args = parser.parse_args()
 
     results_dir = Path(args.project_dir)
     results_dir.mkdir(parents=True, exist_ok=True)
     
-    all_results = []
-    for model in args.models:
-        print(f"  Benchmarking {model}")
-        all_results.append(run_model_benchmark(model, args.config, args.qa_data, args.corpus, results_dir))
+    config_data = load_config(args.config)
+    models_to_benchmark = []
+    
+    for node_line in config_data.get("node_lines", []):
+        for node in node_line.get("nodes", []):
+            if node.get("node_type") == "generator":
+                for module in node.get("modules", []):
+                    if module.get("module_type") == "llama_index_llm" and "model" in module:
+                        models_to_benchmark.append(module["model"])
+
+    print(f"Found models in YAML to benchmark: {models_to_benchmark}")
+    
+    start = time.time()
+    run_autorag_eval(args.config, args.qa_data, args.corpus, str(results_dir))
+    duration_s = time.time() - start
+    
+    summary = {
+        "models_benchmarked": models_to_benchmark,
+        "total_duration_s": duration_s
+    }
     
     summary_path = results_dir / "benchmark_summary.json"
     with open(summary_path, "w") as f:
-        json.dump(all_results, f, indent=2)
-    print(f"Saved summary to {summary_path}")
+        json.dump(summary, f, indent=2)
+    print(f"Saved execution summary to {summary_path}")
 
 
 if __name__ == "__main__":
