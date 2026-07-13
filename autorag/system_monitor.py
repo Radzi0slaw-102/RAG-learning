@@ -5,7 +5,12 @@ import time
 from dataclasses import dataclass, field
 
 import psutil
-import pynvml
+
+try:
+    import pynvml
+    _NVML_AVAILABLE = True
+except ImportError:
+    _NVML_AVAILABLE = False
 
 
 @dataclass
@@ -50,17 +55,27 @@ class SystemMonitor:
         self._stop_event = threading.Event()
         self._samples: list[Sample] = []
         self._start_time: float | None = None
-        pynvml.nvmlInit()
-        self._nvml_handle = pynvml.nvmlDeviceGetHandleByIndex(0)
+        self._nvml_handle = None
+        if _NVML_AVAILABLE:
+            try:
+                pynvml.nvmlInit()
+                self._nvml_handle = pynvml.nvmlDeviceGetHandleByIndex(0)
+            except Exception:
+                self._nvml_handle = None
         
     def _sample_once(self) -> Sample:
         cpu_percent = psutil.cpu_percent(interval=None)
         vmem = psutil.virtual_memory()
         
-        util = pynvml.nvmlDeviceGetUtilizationRates(self._nvml_handle)
-        gpu_util = float(util.gpu)
-        mem = pynvml.nvmlDeviceGetMemoryInfo(self._nvml_handle)
-        gpu_mem = mem.used / (1024 ** 2)
+        gpu_util = gpu_mem = None
+        if self._nvml_handle is not None:
+            try:
+                util = pynvml.nvmlDeviceGetUtilizationRates(self._nvml_handle)
+                gpu_util = float(util.gpu)
+                mem = pynvml.nvmlDeviceGetMemoryInfo(self._nvml_handle)
+                gpu_mem = mem.used / (1024 ** 2)
+            except Exception:
+                pass
         
         return Sample(
             timestamp=time.time(),
@@ -91,5 +106,11 @@ class SystemMonitor:
         return MonitorSummary(duration_s=duration, samples=self._samples)
     
     def shutdown(self):
-        if self._nvml_handle is not None:
+        if self._nvml_handle is None:
+            return
+        try:
             pynvml.nvmlShutdown()
+        except Exception:
+            pass
+        finally:
+            self._nvml_handle = None
