@@ -13,6 +13,7 @@ class GraphRAGStore(SimplePropertyGraphStore):
     max_cluster_size = 5
     
     def persist(self, persist_dir: str) -> None:
+        os.makedirs(persist_dir, exist_ok=True)
         super().persist(os.path.join(persist_dir, "graph_store.json"))
         # community_summary is not part of the base store's persisted state
         with open(os.path.join(persist_dir, "community_summary.json"), "w") as f:
