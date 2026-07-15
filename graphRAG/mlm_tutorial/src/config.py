@@ -1,9 +1,10 @@
-OLLAMA_MODEL = "qwen2.5:0.5b"
+OLLAMA_MODEL = "qwen2.5:1.5b"
 OLLAMA_EMBED_MODEL = "nomic-embed-text"
 CHUNK_SIZE = 1024
 CHUNK_OVERLAP = 20
 MAX_PATHS_PER_CHUNK = 2
 MAX_CLUSTER_SIZE = 5
+REQUEST_TIMEOUT = 300.0
 DATA_URL = "https://raw.githubusercontent.com/tomasonjo/blog-datasets/main/news_articles.csv"
 KG_TRIPLET_EXTRACT_TMPL = """
 -Goal-
@@ -11,22 +12,18 @@ Given a text document, identify all entities and their entity types from the tex
 Given the text, extract up to {max_knowledge_triplets} entity-relation triplets.
 
 -Steps-
-1. Identify all entities. For each identified entity, extract the following information:
-- entity_name: Name of the entity, capitalized
-- entity_type: Type of the entity
-- entity_description: Comprehensive description of the entity's attributes and activities
-Format each entity as ("entity")
+1. Identify all entities. For each entity, output exactly one line per field, in this exact format:
+entity_name: <name>
+entity_type: <type>
+entity_description: <description>
 
-2. From the entities identified in step 1, identify all pairs of (source_entity, target_entity) that are *clearly related* to each other.
-For each pair of related entities, extract the following information:
-- source_entity: name of the source entity, as identified in step 1
-- target_entity: name of the target entity, as identified in step 1
-- relation: relationship between source_entity and target_entity
-- relationship_description: explanation as to why you think the source entity and the target entity are related to each other
+2. Identify all pairs of related entities. For each pair, output exactly one line per field, in this exact format:
+source_entity: <name>
+target_entity: <name>
+relation: <relation>
+relationship_description: <description>
 
-Format each relationship as ("relationship")
-
-3. When finished, output.
+Do not use any other format. Do not use markdown, numbered lists, or parentheses.
 
 -Real Data-
 ######################

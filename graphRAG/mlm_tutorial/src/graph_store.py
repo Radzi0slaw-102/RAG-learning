@@ -34,6 +34,10 @@ class GraphRAGStore(SimplePropertyGraphStore):
     def build_communities(self):
         # builds communities from the graph and summarizes them
         nx_graph = self._create_nx_graph()
+        if nx_graph.number_of_edges() == 0:
+            print("No relationships extracted - skipping community detection.")
+            return
+        
         community_hierarchical_clusters = hierarchical_leiden(
             nx_graph, max_cluster_size=self.max_cluster_size
         )
@@ -58,7 +62,7 @@ class GraphRAGStore(SimplePropertyGraphStore):
     
     def _collect_community_info(self, nx_graph, clusters):
         # collect detailed information for each node based on their community
-        community_mapping = {item.node: item.clister for item in clusters}
+        community_mapping = {item.node: item.cluster for item in clusters}
         community_info = {}
         
         for item in clusters:
