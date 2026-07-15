@@ -1,3 +1,5 @@
+import os
+import json
 import re
 import networkx as nx
 from graspologic.partition import hierarchical_leiden
@@ -9,6 +11,21 @@ from config import OLLAMA_MODEL
 class GraphRAGStore(SimplePropertyGraphStore):
     community_summary = {}
     max_cluster_size = 5
+    
+    def persist(self, persist_dir: str) -> None:
+        super().persist(os.path.join(persist_dir, "graph_store.json"))
+        # community_summary is not part of the base store's persisted state
+        with open(os.path.join(persist_dir, "community_summary.json"), "w") as f:
+            json.dump(self.community_summary, f)
+    
+    @classmethod
+    def load(cls, persist_dir: str) -> "GraphRAGStore":
+        store = cls.from_persist_path(os.path.join(persist_dir, "graph_store.json"))
+        summary_path = os.path.join(persist_dir, "community_summary.json")
+        if os.path.exists(summary_path):
+            with open(summary_path) as f:
+                store.community_summary = json.load(f)
+        return store
     
     def generate_community_summary(self, text):
         # generate summary for a given text using an LLM
