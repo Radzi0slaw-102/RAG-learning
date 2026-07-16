@@ -1,9 +1,10 @@
 embedding_model: nomic-embed-text
 
 llm_models:
-  - name: llama3.1:8b
-  - name: mistral:7b
-  - name: qwen2.5:7b
+  - name: llama3.2:1b
+  - name: smollm2:1.7b
+  - name: qwen2.5:1.5b
 
 ollama_base_url: http://localhost:11434
 max_corpus_documents: 150
+max_qa_pairs: 40
