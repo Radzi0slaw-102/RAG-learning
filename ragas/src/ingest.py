@@ -20,7 +20,7 @@ import requests
 
 SOURCE_URL = "https://raw.githubusercontent.com/pubmedqa/pubmedqa/master/data/ori_pqal.json"
 
-OUT_DIR = Path(__file__).resolve().parent / "data"
+OUT_DIR = Path(__file__).resolve().parent.parent / "data"
 CORPUS_OUT = OUT_DIR / "corpus"
 QA_OUT = OUT_DIR / "qa_pairs.jsonl"
 

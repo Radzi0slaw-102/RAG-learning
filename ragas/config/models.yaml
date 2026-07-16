@@ -1,0 +1,9 @@
+embedding_model: nomic-embed-text
+
+llm_models:
+  - name: llama3.1:8b
+  - name: mistral:7b
+  - name: qwen2.5:7b
+
+ollama_base_url: http://localhost:11434
+max_corpus_documents: 150
