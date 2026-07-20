@@ -1,5 +1,10 @@
 DEFAULT_MODEL = "llama3.1:8b"
 HOST = 'http://localhost:11434'
+DEFAULT_TITLES = [
+    "Pride and Prejudice",
+    "Dracula",
+    "The Adventures of Sherlock Holmes",
+]
 EXTRACTION_PROMPT = """You are extracting a knowledge graph from text.
 
 Identify all named entities and the relations between them in the text below.

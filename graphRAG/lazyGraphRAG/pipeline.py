@@ -5,6 +5,7 @@ from graph_builder import GraphBuilder
 from llama_index.core import SimpleDirectoryReader
 from llama_index.core.node_parser import SentenceSplitter
 
+from data_loader import load_nodes
 from config import DEFAULT_MODEL, HOST
 
 def build_graph_from_nodes(
@@ -23,9 +24,7 @@ def build_graph_from_nodes(
 
 
 if __name__ == "__main__":
-    documents = SimpleDirectoryReader("data").load_data()
-    nodes = SentenceSplitter(chunk_size=512, chunk_overlap=50).get_nodes_from_documents(documents)
-    
+    nodes = load_nodes(max_nodes=30)
     graph_builder = build_graph_from_nodes(nodes)
     print(graph_builder.stats())
     graph_builder.save("knowledge_graph.graphml")
