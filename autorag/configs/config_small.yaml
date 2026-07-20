@@ -1,0 +1,58 @@
+vectordb:
+  - name: ollama_vectordb
+    db_type: chroma
+    client_type: persistent
+    path: ${PROJECT_DIR}/resources/chroma
+    collection_name: ollama_benchmark
+    embedding_model:
+      - type: ollama
+        model_name: nomic-embed-text
+        base_url: http://localhost:11434
+
+node_lines:
+  - node_line_name: retrieve_node_line
+    nodes:
+      - node_type: lexical_retrieval
+        strategy: {metrics: [retrieval_f1, retrieval_recall, retrieval_precision]}
+        top_k: 5
+        modules:
+          - module_type: bm25
+      - node_type: semantic_retrieval
+        strategy: {metrics: [retrieval_f1, retrieval_recall, retrieval_precision]}
+        top_k: 5
+        modules:
+          - module_type: vectordb
+            vectordb: ollama_vectordb
+  - node_line_name: generate_node_line
+    nodes:
+      - node_type: prompt_maker
+        strategy:
+          metrics: [ meteor, rouge, bert_score ]
+        modules:
+          - module_type: fstring
+            prompt: "Read the passages and answer the given question. \n Question: {query} \n Passage: {retrieved_contents} \n Answer : "
+      - node_type: generator
+        strategy:
+          metrics: [bleu, meteor, rouge]
+        modules:
+          - module_type: llama_index_llm
+            llm: openailike
+            model: smollm2:135m
+            temperature: [ 0.1, 0.5, 1.0 ]
+            batch: 1
+            api_base: http://localhost:11434/v1
+            api_key: "ollama"
+          - module_type: llama_index_llm
+            llm: openailike
+            model: qwen2.5:0.5b
+            temperature: [ 0.1, 0.5, 1.0 ]
+            batch: 1
+            api_base: http://localhost:11434/v1
+            api_key: "ollama"
+          - module_type: llama_index_llm
+            llm: openailike
+            model: llama3.2:1b
+            temperature: [ 0.1, 0.5, 1.0 ]
+            batch: 1
+            api_base: http://localhost:11434/v1
+            api_key: "ollama"
