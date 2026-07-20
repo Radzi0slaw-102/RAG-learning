@@ -1,12 +1,6 @@
 """
 Score each model's results/raw/{model}.jsonl with ragas and write a
 per-model summary to results/scores.csv.
-
-Note: ragas==0.4.x's evaluate() rejects the new ragas.metrics.collections
-metric instances due to a stale isinstance(m, Metric) check (see
-https://github.com/explodinggradients/ragas/issues/2624), even though
-the collections API is the one the library itself recommends. We call
-metric.ascore() directly per sample instead of going through evaluate().
 """
 
 from __future__ import annotations
@@ -35,7 +29,7 @@ SCORES_PATH = PROJECT_ROOT / "results" / "scores.csv"
 
 def build_judge(config: dict):
     client = AsyncOpenAI(api_key="ollama", base_url=f"{config['ollama_base_url']}/v1")
-    llm = llm_factory(model=config["judge_model"], provider="openai", client=client, max_tokens=4096)
+    llm = llm_factory(model=config["judge_model"], provider="openai", client=client, max_tokens=16384)
     embeddings = OpenAIEmbeddings(client=client, model=config["embedding_model"])
     return llm, embeddings
 

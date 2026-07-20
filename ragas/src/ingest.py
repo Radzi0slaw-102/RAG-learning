@@ -3,12 +3,6 @@ Download the PubMedQA labeled subset (PQA-L, 1000 expert-annotated
 question/context/answer instances) directly from the official
 pubmedqa/pubmedqa GitHub repo, and convert it into a flat JSONL of
 question/ground_truth records plus a plain-text corpus for indexing.
-
-We fetch the raw JSON file straight from GitHub rather than going
-through the Hugging Face `datasets` library, since the qiaojin/PubMedQA
-HF repo still ships a legacy loading script that datasets>=4.0 refuses
-to run, and its auto-converted Parquet revision collapses all three
-PubMedQA subsets into a single ambiguous config.
 """
 
 from __future__ import annotations
