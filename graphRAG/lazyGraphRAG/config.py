@@ -1,4 +1,5 @@
-DEFAULT_MODEL = "qwen2.5:7b"
+DEFAULT_MODEL = "llama3.1:8b"
+HOST = 'http://localhost:11434'
 EXTRACTION_PROMPT = """You are extracting a knowledge graph from text.
 
 Identify all named entities and the relations between them in the text below.

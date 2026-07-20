@@ -6,7 +6,7 @@ from dataclasses import dataclass, field
 
 from ollama import Client
 
-from config import DEFAULT_MODEL, EXTRACTION_PROMPT
+from config import EXTRACTION_PROMPT
 
 
 @dataclass
@@ -14,6 +14,7 @@ class ExtractedEntity:
     name: str
     type: str
     description: str
+    source_node_id: str
 
 
 @dataclass
@@ -43,7 +44,7 @@ def _parse_json_res(raw: str) -> dict:
 
 
 class EntityExtractor:
-    def __init__(self, model: str = DEFAULT_MODEL, host: str | None = 'http://localhost:11434'):
+    def __init__(self, model: str, host: str | None):
         self.model = model
         self.client = Client(host=host) if host else Client()
     

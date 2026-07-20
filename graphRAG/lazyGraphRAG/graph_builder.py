@@ -20,14 +20,14 @@ class GraphBuilder:
                 node = self.graph.nodes[key]
                 node["source_node_ids"].add(entity.source_node_id)
                 if entity.description:
-                    node["description"].add(entity.description)
+                    node["descriptions"].add(entity.description)
             else:
                 self.graph.add_node(
                     key,
                     name=entity.name,
                     type=entity.type,
                     descriptions={entity.description} if entity.description else set(),
-                    source_node_id={entity.source_node_id},
+                    source_node_ids={entity.source_node_id},
                 )
         
         for relation in result.relations:
