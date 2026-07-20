@@ -1,3 +1,5 @@
+# LLM-based entity and relation extraction for LazyGraphRAG
+
 import json
 import re
 from dataclasses import dataclass, field
