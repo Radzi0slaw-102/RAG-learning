@@ -1,0 +1,114 @@
+import os
+import json
+import re
+import networkx as nx
+from graspologic.partition import hierarchical_leiden
+from llama_index.core.graph_stores import SimplePropertyGraphStore
+from llama_index.core.llms import ChatMessage
+from llama_index.llms.ollama import Ollama
+from config import OLLAMA_MODEL
+
+class GraphRAGStore(SimplePropertyGraphStore):
+    community_summary = {}
+    max_cluster_size = 5
+    
+    def persist(self, persist_dir: str) -> None:
+        os.makedirs(persist_dir, exist_ok=True)
+        super().persist(os.path.join(persist_dir, "graph_store.json"))
+        # community_summary is not part of the base store's persisted state
+        with open(os.path.join(persist_dir, "community_summary.json"), "w") as f:
+            json.dump(self.community_summary, f)
+    
+    @classmethod
+    def load(cls, persist_dir: str) -> "GraphRAGStore":
+        store = cls.from_persist_path(os.path.join(persist_dir, "graph_store.json"))
+        summary_path = os.path.join(persist_dir, "community_summary.json")
+        if os.path.exists(summary_path):
+            with open(summary_path) as f:
+                store.community_summary = json.load(f)
+        return store
+    
+    def generate_community_summary(self, text):
+        # generate summary for a given text using an LLM
+        messages = [
+            ChatMessage(
+                role="system",
+                content=(
+                    "You are provided with a set of relationships from a knowledge graph, each represented as "
+                    "entity1->entity2->relation->relationship_description. Your task is to create a summary of these "
+                    "relationships. The summary should include the names of the entities involved and a concise synthesis "
+                    "of the relationship descriptions. The goal is to capture the most critical and relevant details that "
+                    "highlight the nature and significance of each relationship. Ensure that the summary is coherent and "
+                    "integrates the information in a way that emphasizes the key aspects of the relationships."
+                )
+            ),
+            ChatMessage(role="user", content=text)
+        ]
+        
+        response = Ollama(model=OLLAMA_MODEL).chat(messages)
+        # to return clean response
+        return re.sub(r"^assistant:\s*", "", str(response)).strip()
+    
+    def build_communities(self):
+        # builds communities from the graph and summarizes them
+        nx_graph = self._create_nx_graph()
+        if nx_graph.number_of_edges() == 0:
+            print("No relationships extracted - skipping community detection.")
+            return
+        
+        community_hierarchical_clusters = hierarchical_leiden(
+            nx_graph, max_cluster_size=self.max_cluster_size
+        )
+        community_info = self._collect_community_info(
+            nx_graph, community_hierarchical_clusters
+        )
+        self._summarize_communities(community_info)
+    
+    def _create_nx_graph(self):
+        # converts internal graph representation to NetworkX graph
+        nx_graph = nx.Graph()
+        for node in self.graph.nodes.values():
+            nx_graph.add_node(str(node))
+        for relation in self.graph.relations.values():
+            nx_graph.add_edge(
+                relation.source_id,
+                relation.target_id,
+                relationship=relation.label,
+                description=relation.properties["relationship_description"]
+            )
+        return nx_graph
+    
+    def _collect_community_info(self, nx_graph, clusters):
+        # collect detailed information for each node based on their community
+        community_mapping = {item.node: item.cluster for item in clusters}
+        community_info = {}
+        
+        for item in clusters:
+            cluster_id = item.cluster
+            node = item.node
+            if cluster_id not in community_info:
+                community_info[cluster_id] = []
+            
+            for neighbor in nx_graph.neighbors(node):
+                if community_mapping[neighbor] == cluster_id:
+                    edge_data = nx_graph.get_edge_data(node, neighbor)
+                    if edge_data:
+                        detail = f"{node} -> {neighbor} -> {edge_data['relationship']} -> {edge_data['description']}"
+                        community_info[cluster_id].append(detail)
+        return community_info
+    
+    def _summarize_communities(self, community_info):
+        # generate and store summaries for each community
+        for community_id, details in community_info.items():
+            details_text = (
+                "\n".join(details) + "."
+            ) # ensure it ends with a period
+            self.community_summary[
+                community_id
+            ] = self.generate_community_summary(details_text)
+    
+    def get_community_summaries(self):
+        # returns the community summaries, building them if not already done
+        if not self.community_summary:
+            self.build_communities()
+        return self.community_summary
