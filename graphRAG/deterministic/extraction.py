@@ -75,7 +75,7 @@ def extract_svo_triples(sent: Span) -> Iterator[Triple]:
         
         obj = _find_object(token)
         if obj is not None:
-            yield Triple(subj_text)
+            yield Triple(subj_text, verb_text, _span_text(obj), sent.text.strip())
         
         for prep, pobj in _find_prep_objects(token):
             relation = f"{verb_text} {prep}"

@@ -32,8 +32,8 @@ class EntityResolver:
         self._alias_to_canonical: dict[str, str] = {}
     
     def resolve (self, surface_form: str) -> str:
-        cleaned = None
-        key = clean_text(surface_form).lower()
+        cleaned = clean_text(surface_form)
+        key = cleaned.lower()
         
         if key in self._alias_to_canonical:
             return self._alias_to_canonical[key]
