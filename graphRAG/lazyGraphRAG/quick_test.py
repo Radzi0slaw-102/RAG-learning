@@ -1,4 +1,3 @@
-# quick_test.py — testowanie samej ekstrakcji bez folderu data/
 from llama_index.core.schema import TextNode
 from pipeline import build_graph_from_nodes
 

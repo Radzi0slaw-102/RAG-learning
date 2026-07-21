@@ -1,4 +1,4 @@
 # How to run
 ```sh
-python pipeline.py
+python main.py
 ```
