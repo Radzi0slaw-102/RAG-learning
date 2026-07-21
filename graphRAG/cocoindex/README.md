@@ -38,3 +38,6 @@ MATCH (d:Document)-[:MENTION]->(e:Entity)
 RETURN e.value, count(DISTINCT d) AS docs
 ORDER BY docs DESC LIMIT 10
 ```
+
+## Credits
+Oryginal repository: https://github.com/cocoindex-io/cocoindex/blob/main/examples/docs_to_knowledge_graph
