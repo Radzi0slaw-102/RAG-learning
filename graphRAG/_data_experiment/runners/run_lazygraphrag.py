@@ -10,7 +10,6 @@ Usage:
 import argparse
 import json
 import multiprocessing
-import re
 import sys
 
 sys.path.insert(0, "../lazyGraphRAG")
@@ -21,11 +20,7 @@ from llama_index.core import Document
 from llama_index.core.node_parser import SentenceSplitter
 
 from question_keywords import question_keywords
-
-
-def load_documents_from_manifest(dataset_dir: str) -> list[Document]:
-    data = pd.read_csv(f"{dataset_dir}/manifest.csv")
-    return [Document(text=f"{row['title']}: {row['text']}") for _, row in data.iterrows()]
+from load_from_manifest import load_documents_from_manifest
 
 
 def load_nodes_from_manifest(dataset_dir: str, chunk_size: int = 512, chunk_overlap: int = 50, max_nodes: int | None = None):
