@@ -38,12 +38,10 @@ def build_index(dataset_dir: str):
         driver.close()
     
     app = coco.App(
-        coco.AppConfig(name="DocsToKnowledgeGraph"),
+        coco.AppConfig(name="DataExperiment"),
         app_main,
         sourcedir=pathlib.Path(dataset_dir) / "docs",
     )
-    app.run()
-    return app
 
 
 def get_driver():

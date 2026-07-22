@@ -24,12 +24,11 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--dataset", required=True)
     parser.add_argument("--questions", required=True)
-    parser.add_argument("--limit", type=int, default=100)
     parser.add_argument("--persist-dir", default="storage")
     parser.add_argument("--out", default=None)
     args = parser.parse_args()
     
-    documents = load_documents_from_manifest(args.dataset, args.limit)
+    documents = load_documents_from_manifest(args.dataset)
     
     # build_index expects a csv_url and calls load_documents(csv_url, limit) internally;
     # here it's bypassed by constructing the index directly with our own documents
