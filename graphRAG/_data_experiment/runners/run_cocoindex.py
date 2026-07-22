@@ -21,9 +21,8 @@ import cocoindex as coco
 import yaml
 from neo4j import GraphDatabase
 
+from question_keywords import question_keywords
 from main import app_main
-
-STOPWORDS = {"what", "which", "does", "have", "with", "that", "this", "from", "into"}
 
 
 def clear_database(driver) -> None:
@@ -52,11 +51,6 @@ def get_driver():
     user = os.environ.get("NEO4J_USER", "neo4j")
     password = os.environ.get("NEO4J_PASSWORD", "cocoindex")
     return GraphDatabase.driver(uri, auth=(user, password))
-
-
-def question_keywords(question: str) -> list[str]:
-    words = re.findall(r"[A-Za-z0-9][\w.\-]*", question)
-    return [w for w in words if len(w) > 3 and w.lower() not in STOPWORDS]
 
 
 def query_index(driver, question: str) -> str:
