@@ -61,8 +61,6 @@ async def process_mapping(
 
 @coco.fn
 async def app_main(source: pathlib.Path) -> None:
-    # declared, not mounted: these node tables already exist from
-    # main_cve / main_attack — here we only need them as relation endpoints
     cve_table = neo4j.declare_table_target(
         KG_DB,
         "CVE",
