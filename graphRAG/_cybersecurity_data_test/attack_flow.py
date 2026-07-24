@@ -119,7 +119,7 @@ async def app_main(source: pathlib.Path) -> None:
         print(f"{rec.technique_id}: {rec.name} ({rec.tactic})")
 
 
-_source_path = pathlib.Path(os.environ.get("SOURCE_PATH", "data/raw/attack_techniques.json"))
+_source_path = pathlib.Path(os.environ.get("SOURCE_PATH", "data/attack_techniques.json"))
 
 app = coco.App(
     coco.AppConfig(name="AttackIngestion"),

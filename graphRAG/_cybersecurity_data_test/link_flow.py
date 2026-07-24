@@ -105,7 +105,7 @@ async def app_main(source: pathlib.Path) -> None:
     print(f"Declared {len(records)} MAPS_TO edges.")
 
 
-_source_path = pathlib.Path(os.environ.get("SOURCE_PATH", "data/raw/kev_attack_mapping.json"))
+_source_path = pathlib.Path(os.environ.get("SOURCE_PATH", "data/kev_attack_mapping.json"))
 
 app = coco.App(
     coco.AppConfig(name="CveAttackLinking"),

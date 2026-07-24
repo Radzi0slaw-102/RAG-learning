@@ -184,7 +184,7 @@ async def app_main(source: pathlib.Path) -> None:
         print(f"{rec.cve_id}: {extracted.vulnerability_type} — {extracted.attack_vector_summary}")
 
 
-_source_path = pathlib.Path(os.environ.get("SOURCE_PATH", "data/raw/cve_records.json"))
+_source_path = pathlib.Path(os.environ.get("SOURCE_PATH", "data/cve_records.json"))
 
 app = coco.App(
     coco.AppConfig(name="CveIngestion"),
