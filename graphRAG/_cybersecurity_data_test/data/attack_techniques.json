@@ -1,0 +1,161 @@
+{
+  "techniques": [
+    {
+      "technique_id": "T1133",
+      "name": "External Remote Services",
+      "tactic": "Persistence",
+      "description": "Adversaries may leverage external-facing remote services to initially access and/or persist within a network. Remote services such as VPNs, Citrix, and other access mechanisms allow users to connect to internal enterprise network resources from external locations. There are often remote service gateways that manage connections and credential authentication for these services. Services such as [Windows Remote Management](https://attack.mitre.org/techniques/T1021/006) and [VNC](https://attack.mitr",
+      "mitigations": [
+        "Network Segmentation",
+        "Disable or Remove Feature or Program",
+        "Limit Access to Resource Over Network",
+        "Multi-factor Authentication",
+        "External Remote Services Mitigation"
+      ]
+    },
+    {
+      "technique_id": "T1087.002",
+      "name": "Domain Account",
+      "tactic": "Discovery",
+      "description": "Adversaries may attempt to get a listing of domain accounts. This information can help adversaries determine which domain accounts exist to aid in follow-on behavior such as targeting specific accounts which possess particular privileges.",
+      "mitigations": [
+        "Operating System Configuration"
+      ]
+    },
+    {
+      "technique_id": "T1005",
+      "name": "Data from Local System",
+      "tactic": "Collection",
+      "description": "Adversaries may search local system sources, such as file systems and configuration files or local databases, to find files of interest and sensitive data prior to Exfiltration.",
+      "mitigations": [
+        "Data Loss Prevention",
+        "Data from Local System Mitigation"
+      ]
+    },
+    {
+      "technique_id": "T1190",
+      "name": "Exploit Public-Facing Application",
+      "tactic": "Initial Access",
+      "description": "Adversaries may attempt to exploit a weakness in an Internet-facing host or system to initially access a network. The weakness in the system can be a software bug, a temporary glitch, or a misconfiguration.",
+      "mitigations": [
+        "Application Isolation and Sandboxing",
+        "Network Segmentation",
+        "Vulnerability Scanning",
+        "Privileged Account Management",
+        "Exploit Protection",
+        "Update Software",
+        "Exploit Public-Facing Application Mitigation"
+      ]
+    },
+    {
+      "technique_id": "T1021",
+      "name": "Remote Services",
+      "tactic": "Lateral Movement",
+      "description": "Adversaries may use [Valid Accounts](https://attack.mitre.org/techniques/T1078) to log into a service that accepts remote connections, such as telnet, SSH, and VNC. The adversary may then perform actions as the logged-on user.",
+      "mitigations": [
+        "Limit Access to Resource Over Network",
+        "Audit",
+        "User Account Management",
+        "Disable or Remove Feature or Program",
+        "Multi-factor Authentication",
+        "Password Policies",
+        "Multi-factor Authentication",
+        "Remote Services Mitigation"
+      ]
+    },
+    {
+      "technique_id": "T1505.003",
+      "name": "Web Shell",
+      "tactic": "Persistence",
+      "description": "Adversaries may backdoor web servers with web shells to establish persistent access to systems. A Web shell is a Web script that is placed on an openly accessible Web server to allow an adversary to access the Web server as a gateway into a network. A Web shell may provide a set of functions to execute or a command-line interface on the system that hosts the Web server.(Citation: volexity_0day_sophos_FW)",
+      "mitigations": [
+        "Disable or Remove Feature or Program",
+        "User Account Management"
+      ]
+    },
+    {
+      "technique_id": "T1090",
+      "name": "Proxy",
+      "tactic": "Command And Control",
+      "description": "Adversaries may use a connection proxy to direct network traffic between systems or act as an intermediary for network communications to a command and control server to avoid direct connections to their infrastructure. Many tools exist that enable traffic redirection through proxies or port redirection, including [HTRAN](https://attack.mitre.org/software/S0040), ZXProxy, and ZXPortMap. (Citation: Trend Micro APT Attack Tools) Adversaries use these types of proxies to manage command and control c",
+      "mitigations": [
+        "Filter Network Traffic",
+        "Network Intrusion Prevention",
+        "SSL/TLS Inspection",
+        "Connection Proxy Mitigation"
+      ]
+    },
+    {
+      "technique_id": "T1059",
+      "name": "Command and Scripting Interpreter",
+      "tactic": "Execution",
+      "description": "Adversaries may abuse command and script interpreters to execute commands, scripts, or binaries. These interfaces and languages provide ways of interacting with computer systems and are a common feature across many different platforms. Most systems come with some built-in command-line interface and scripting capabilities, for example, macOS and Linux distributions include some flavor of [Unix Shell](https://attack.mitre.org/techniques/T1059/004) while Windows installations include the [Windows C",
+      "mitigations": [
+        "Code Signing",
+        "Disable or Remove Feature or Program",
+        "Execution Prevention",
+        "Antivirus/Antimalware",
+        "Privileged Account Management",
+        "Restrict Web-Based Content",
+        "Behavior Prevention on Endpoint",
+        "Command-Line Interface Mitigation"
+      ]
+    },
+    {
+      "technique_id": "T1083",
+      "name": "File and Directory Discovery",
+      "tactic": "Discovery",
+      "description": "Adversaries may enumerate files and directories or may search in specific locations of a host or network share for certain information within a file system. Adversaries may use the information from [File and Directory Discovery](https://attack.mitre.org/techniques/T1083) during automated discovery to shape follow-on behaviors, including whether or not the adversary fully infects the target and/or attempts specific actions.",
+      "mitigations": [
+        "File and Directory Discovery Mitigation"
+      ]
+    },
+    {
+      "technique_id": "T1110",
+      "name": "Brute Force",
+      "tactic": "Credential Access",
+      "description": "Adversaries may use brute force techniques to gain access to accounts when passwords are unknown or when password hashes are obtained.(Citation: TrendMicro Pawn Storm Dec 2020) Without knowledge of the password for an account or set of accounts, an adversary may systematically guess the password using a repetitive or iterative mechanism.(Citation: Dragos Crashoverride 2018) Brute forcing passwords can take place via interaction with a service that will check the validity of those credentials or ",
+      "mitigations": [
+        "User Account Management",
+        "Account Use Policies",
+        "Multi-factor Authentication",
+        "Password Policies",
+        "Brute Force Mitigation"
+      ]
+    },
+    {
+      "technique_id": "T1059.004",
+      "name": "Unix Shell",
+      "tactic": "Execution",
+      "description": "Adversaries may abuse Unix shell commands and scripts for execution. Unix shells are the primary command prompt on Linux and macOS systems, though many variations of the Unix shell exist (e.g. sh, bash, zsh, etc.) depending on the specific OS or distribution.(Citation: DieNet Bash)(Citation: Apple ZShell) Unix shells can control every aspect of a system, with certain commands requiring elevated privileges.",
+      "mitigations": [
+        "Execution Prevention"
+      ]
+    },
+    {
+      "technique_id": "T1068",
+      "name": "Exploitation for Privilege Escalation",
+      "tactic": "Privilege Escalation",
+      "description": "Adversaries may exploit software vulnerabilities in an attempt to elevate privileges. Exploitation of a software vulnerability occurs when an adversary takes advantage of a programming error in a program, service, or within the operating system software or kernel itself to execute adversary-controlled code. Security constructs such as permission levels will often hinder access to information and use of certain techniques, so adversaries will likely need to perform privilege escalation to include",
+      "mitigations": [
+        "Update Software",
+        "Exploit Protection",
+        "Application Isolation and Sandboxing",
+        "Threat Intelligence Program",
+        "Execution Prevention",
+        "Exploitation for Privilege Escalation Mitigation"
+      ]
+    },
+    {
+      "technique_id": "T1486",
+      "name": "Data Encrypted for Impact",
+      "tactic": "Impact",
+      "description": "Adversaries may encrypt data on target systems or on large numbers of systems in a network to interrupt availability to system and network resources. They can attempt to render stored data inaccessible by encrypting files or data on local and remote drives and withholding access to a decryption key. This may be done in order to extract monetary compensation from a victim in exchange for decryption or a decryption key (ransomware) or to render data permanently inaccessible in cases where the key ",
+      "mitigations": [
+        "Behavior Prevention on Endpoint",
+        "Data Backup",
+        "Data Encrypted for Impact Mitigation"
+      ]
+    }
+  ]
+}

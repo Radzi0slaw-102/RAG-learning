@@ -1,0 +1,130 @@
+{
+  "mapping_objects": [
+    {
+      "capability_id": "CVE-2014-6271",
+      "capability_description": "GNU Bourne-Again Shell (Bash) Arbitrary Code Execution Vulnerability",
+      "mapping_type": "exploitation_technique",
+      "attack_object_id": "T1190",
+      "attack_object_name": "Exploit Public-Facing Application"
+    },
+    {
+      "capability_id": "CVE-2014-6271",
+      "capability_description": "GNU Bourne-Again Shell (Bash) Arbitrary Code Execution Vulnerability",
+      "mapping_type": "exploitation_technique",
+      "attack_object_id": "T1133",
+      "attack_object_name": "External Remote Services"
+    },
+    {
+      "capability_id": "CVE-2014-6271",
+      "capability_description": "GNU Bourne-Again Shell (Bash) Arbitrary Code Execution Vulnerability",
+      "mapping_type": "primary_impact",
+      "attack_object_id": "T1059.004",
+      "attack_object_name": "Unix Shell"
+    },
+    {
+      "capability_id": "CVE-2020-1472",
+      "capability_description": "Microsoft Netlogon Privilege Escalation Vulnerability",
+      "mapping_type": "secondary_impact",
+      "attack_object_id": "T1133",
+      "attack_object_name": "External Remote Services"
+    },
+    {
+      "capability_id": "CVE-2021-26855",
+      "capability_description": "Microsoft Exchange Server Remote Code Execution Vulnerability",
+      "mapping_type": "secondary_impact",
+      "attack_object_id": "T1005",
+      "attack_object_name": "Data from Local System"
+    },
+    {
+      "capability_id": "CVE-2021-26855",
+      "capability_description": "Microsoft Exchange Server Remote Code Execution Vulnerability",
+      "mapping_type": "secondary_impact",
+      "attack_object_id": "T1505.003",
+      "attack_object_name": "Web Shell"
+    },
+    {
+      "capability_id": "CVE-2021-26855",
+      "capability_description": "Microsoft Exchange Server Remote Code Execution Vulnerability",
+      "mapping_type": "primary_impact",
+      "attack_object_id": "T1090",
+      "attack_object_name": "Proxy"
+    },
+    {
+      "capability_id": "CVE-2021-26855",
+      "capability_description": "Microsoft Exchange Server Remote Code Execution Vulnerability",
+      "mapping_type": "exploitation_technique",
+      "attack_object_id": "T1133",
+      "attack_object_name": "External Remote Services"
+    },
+    {
+      "capability_id": "CVE-2020-1472",
+      "capability_description": "Microsoft Netlogon Privilege Escalation Vulnerability",
+      "mapping_type": "secondary_impact",
+      "attack_object_id": "T1087.002",
+      "attack_object_name": "Domain Account"
+    },
+    {
+      "capability_id": "CVE-2020-1472",
+      "capability_description": "Microsoft Netlogon Privilege Escalation Vulnerability",
+      "mapping_type": "primary_impact",
+      "attack_object_id": "T1021",
+      "attack_object_name": "Remote Services"
+    },
+    {
+      "capability_id": "CVE-2020-1472",
+      "capability_description": "Microsoft Netlogon Privilege Escalation Vulnerability",
+      "mapping_type": "exploitation_technique",
+      "attack_object_id": "T1110",
+      "attack_object_name": "Brute Force"
+    },
+    {
+      "capability_id": "CVE-2019-19781",
+      "capability_description": "Citrix ADC, Gateway, and SD-WAN WANOP Appliance Code Execution Vulnerability",
+      "mapping_type": "secondary_impact",
+      "attack_object_id": "T1083",
+      "attack_object_name": "File and Directory Discovery"
+    },
+    {
+      "capability_id": "CVE-2019-19781",
+      "capability_description": "Citrix ADC, Gateway, and SD-WAN WANOP Appliance Code Execution Vulnerability",
+      "mapping_type": "primary_impact",
+      "attack_object_id": "T1059",
+      "attack_object_name": "Command and Scripting Interpreter"
+    },
+    {
+      "capability_id": "CVE-2019-19781",
+      "capability_description": "Citrix ADC, Gateway, and SD-WAN WANOP Appliance Code Execution Vulnerability",
+      "mapping_type": "exploitation_technique",
+      "attack_object_id": "T1133",
+      "attack_object_name": "External Remote Services"
+    },
+    {
+      "capability_id": "CVE-2020-1472",
+      "capability_description": "Microsoft Netlogon Privilege Escalation Vulnerability",
+      "mapping_type": "primary_impact",
+      "attack_object_id": "T1087.002",
+      "attack_object_name": "Domain Account"
+    },
+    {
+      "capability_id": "CVE-2020-1472",
+      "capability_description": "Microsoft Netlogon Privilege Escalation Vulnerability",
+      "mapping_type": "secondary_impact",
+      "attack_object_id": "T1486",
+      "attack_object_name": "Data Encrypted for Impact"
+    },
+    {
+      "capability_id": "CVE-2020-1472",
+      "capability_description": "Microsoft Netlogon Privilege Escalation Vulnerability",
+      "mapping_type": "primary_impact",
+      "attack_object_id": "T1068",
+      "attack_object_name": "Exploitation for Privilege Escalation"
+    },
+    {
+      "capability_id": "CVE-2020-1472",
+      "capability_description": "Microsoft Netlogon Privilege Escalation Vulnerability",
+      "mapping_type": "exploitation_technique",
+      "attack_object_id": "T1133",
+      "attack_object_name": "External Remote Services"
+    }
+  ]
+}
