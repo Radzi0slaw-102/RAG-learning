@@ -53,7 +53,7 @@ async def judge(client: instructor.Instructor, question: str, system_answer: str
 
 
 async def main() -> None:
-    data = json.loads(open("eval_questions.json").read())
+    data = json.loads(open("results/eval_questions.json").read())
     questions = data["questions"]
 
     context = await fetch_context()
@@ -83,7 +83,7 @@ async def main() -> None:
 
     accuracy = sum(r["correct"] for r in results) / len(results) if results else 0.0
 
-    with open("eval_results.json", "w") as f:
+    with open("results/eval_results.json", "w") as f:
         json.dump({"accuracy": accuracy, "results": results}, f, indent=2)
 
     print(f"Accuracy: {accuracy:.1%} ({sum(r['correct'] for r in results)}/{len(results)})")

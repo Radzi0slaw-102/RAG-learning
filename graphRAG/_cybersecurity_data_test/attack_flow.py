@@ -46,8 +46,6 @@ class RawTechnique:
 async def process_technique(
     record: RawTechnique,
     technique_table: neo4j.TableTarget[TechniqueNode],
-    mitigation_table: neo4j.TableTarget[MitigationNode],
-    mitigated_by_rel: neo4j.RelationTarget[MitigatedBy],
 ) -> None:
     technique_table.declare_record(
         row=TechniqueNode(
@@ -58,11 +56,28 @@ async def process_technique(
         )
     )
 
-    for mitigation_name in record.mitigations:
+
+@coco.fn
+async def declare_mitigations(
+    records: list[RawTechnique],
+    mitigation_table: neo4j.TableTarget[MitigationNode],
+    mitigated_by_rel: neo4j.RelationTarget[MitigatedBy],
+) -> None:
+    unique_mitigations: set[str] = set()
+    edges: set[tuple[str, str]] = set()  # (technique_id, mitigation_name)
+
+    for rec in records:
+        for mitigation_name in rec.mitigations:
+            unique_mitigations.add(mitigation_name)
+            edges.add((rec.technique_id, mitigation_name))
+
+    for mitigation_name in unique_mitigations:
         mitigation_table.declare_record(row=MitigationNode(name=mitigation_name))
-        edge_id = await generate_id((record.technique_id, mitigation_name))
+
+    for technique_id, mitigation_name in edges:
+        edge_id = await generate_id((technique_id, mitigation_name))
         mitigated_by_rel.declare_relation(
-            from_id=record.technique_id,
+            from_id=technique_id,
             to_id=mitigation_name,
             record=MitigatedBy(id=edge_id),
         )
@@ -92,16 +107,21 @@ async def app_main(source: pathlib.Path) -> None:
     )
 
     raw = json.loads(source.read_text())
-    records = [
-        RawTechnique(
-            technique_id=t["technique_id"],
-            name=t["name"],
-            tactic=t["tactic"],
-            description=t["description"],
-            mitigations=t["mitigations"],
+    seen_ids: set[str] = set()
+    records = []
+    for t in raw["techniques"]:
+        if t["technique_id"] in seen_ids:
+            continue
+        seen_ids.add(t["technique_id"])
+        records.append(
+            RawTechnique(
+                technique_id=t["technique_id"],
+                name=t["name"],
+                tactic=t["tactic"],
+                description=t["description"],
+                mitigations=t["mitigations"],
+            )
         )
-        for t in raw["techniques"]
-    ]
 
     coros = [
         coco.use_mount(
@@ -109,12 +129,19 @@ async def app_main(source: pathlib.Path) -> None:
             process_technique,
             rec,
             technique_table,
-            mitigation_table,
-            mitigated_by_rel,
         )
         for rec in records
     ]
     await asyncio.gather(*coros)
+
+    await coco.mount(
+        coco.component_subpath("declare_mitigations"),
+        declare_mitigations,
+        records,
+        mitigation_table,
+        mitigated_by_rel,
+    )
+
     for rec in records:
         print(f"{rec.technique_id}: {rec.name} ({rec.tactic})")
 

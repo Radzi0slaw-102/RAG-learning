@@ -66,9 +66,9 @@ async def generate_question(client: instructor.Instructor, fact: Fact) -> str:
 
 
 def build_facts() -> list[Fact]:
-    cve_data = json.loads(open("cve_records.json").read())["cve_records"]
-    attack_data = json.loads(open("attack_techniques.json").read())["techniques"]
-    mapping_data = json.loads(open("kev_attack_mapping.json").read())["mapping_objects"]
+    cve_data = json.loads(open("data/cve_records.json").read())["cve_records"]
+    attack_data = json.loads(open("data/attack_techniques.json").read())["techniques"]
+    mapping_data = json.loads(open("data/kev_attack_mapping.json").read())["mapping_objects"]
 
     facts: list[Fact] = []
 
@@ -140,7 +140,7 @@ async def main() -> None:
         })
         print(f"[{fact.subject_id}] {fact.field} -> {question}")
 
-    with open("eval_questions.json", "w") as f:
+    with open("results/eval_questions.json", "w") as f:
         json.dump({"questions": entries}, f, indent=2)
     print(f"\nWrote {len(entries)} questions to eval_questions.json")
 
