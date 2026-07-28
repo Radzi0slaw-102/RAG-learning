@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+from collections import defaultdict
 
 import instructor
 import litellm
@@ -29,6 +30,14 @@ answer (matching IDs, numbers, or names), not just be topically related.
 Minor wording differences are fine. Missing or vague answers are incorrect.
 """
 
+YES_NO_JUDGE_INSTRUCTION = """\
+You are grading a cybersecurity Q&A system on a yes/no question. You
+will see the question, the system's answer, and the correct answer
+("Yes" or "No"). Decide if the system's answer agrees with the correct
+answer — treat any clear affirmative ("yes", "it is", "correct") as
+"Yes" and any clear negative ("no", "it is not", "unrelated") as "No".
+If the system's answer is not a clear yes or no, mark it incorrect.
+"""
 
 class Verdict(pydantic.BaseModel):
     correct: bool = pydantic.Field(description="True if the system answer matches the correct answer.")
@@ -67,6 +76,7 @@ async def main() -> None:
         results.append({
             "subject_id": entry["subject_id"],
             "field": entry["field"],
+            "starting_question_reasoning": entry.get("reasoning", ""),
             "question": entry["question"],
             "expected_answer": entry["expected_answer"],
             "system_answer": system_answer,
@@ -82,11 +92,20 @@ async def main() -> None:
         print(f"  Judge: {verdict.reasoning}\n")
 
     accuracy = sum(r["correct"] for r in results) / len(results) if results else 0.0
+    
+    by_field = defaultdict(lambda: [0, 0])
+    for r in results:
+        by_field[r["field"]][1] += 1
+        if r["correct"]:
+            by_field[r["field"]][0] += 1
 
     with open("results/eval_results.json", "w") as f:
-        json.dump({"accuracy": accuracy, "results": results}, f, indent=2)
+        json.dump({"accuracy": accuracy, "by_field": {k: f"{c}/{t}" for k, (c, t) in by_field.items()}, "results": results}, f, indent=2)
 
     print(f"Accuracy: {accuracy:.1%} ({sum(r['correct'] for r in results)}/{len(results)})")
+    print("By field:")
+    for field, (correct, total) in sorted(by_field.items()):
+        print(f"  {field}: {correct}/{total} ({correct/total:.1%})")
     print("Full results written to eval_results.json")
 
 
