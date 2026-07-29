@@ -37,6 +37,7 @@ async def coco_lifespan(builder: coco.EnvironmentBuilder) -> AsyncIterator[None]
 @dataclass
 class MapsTo:
     id: str
+    mapping_type: str
 
 
 @dataclass
@@ -55,7 +56,7 @@ async def process_mapping(
     maps_to_rel.declare_relation(
         from_id=record.cve_id,
         to_id=record.technique_id,
-        record=MapsTo(id=edge_id),
+        record=MapsTo(id=edge_id, mapping_type=record.mapping_type),
     )
 
 

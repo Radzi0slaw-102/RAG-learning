@@ -29,6 +29,34 @@
       "attack_object_name": "External Remote Services"
     },
     {
+      "capability_id": "CVE-2021-21972",
+      "capability_description": "VMware vCenter Server Remote Code Execution Vulnerability",
+      "mapping_type": "primary_impact",
+      "attack_object_id": "T1059",
+      "attack_object_name": "Command and Scripting Interpreter"
+    },
+    {
+      "capability_id": "CVE-2021-21972",
+      "capability_description": "VMware vCenter Server Remote Code Execution Vulnerability",
+      "mapping_type": "exploitation_technique",
+      "attack_object_id": "T1190",
+      "attack_object_name": "Exploit Public-Facing Application"
+    },
+    {
+      "capability_id": "CVE-2021-27065",
+      "capability_description": "Microsoft Exchange Server Remote Code Execution Vulnerability",
+      "mapping_type": "primary_impact",
+      "attack_object_id": "T1505.003",
+      "attack_object_name": "Web Shell"
+    },
+    {
+      "capability_id": "CVE-2021-27065",
+      "capability_description": "Microsoft Exchange Server Remote Code Execution Vulnerability",
+      "mapping_type": "exploitation_technique",
+      "attack_object_id": "T1190",
+      "attack_object_name": "Exploit Public-Facing Application"
+    },
+    {
       "capability_id": "CVE-2021-26855",
       "capability_description": "Microsoft Exchange Server Remote Code Execution Vulnerability",
       "mapping_type": "secondary_impact",
@@ -57,6 +85,167 @@
       "attack_object_name": "External Remote Services"
     },
     {
+      "capability_id": "CVE-2021-34473",
+      "capability_description": "Microsoft Exchange Server Remote Code Execution Vulnerability",
+      "mapping_type": "secondary_impact",
+      "attack_object_id": "T1486",
+      "attack_object_name": "Data Encrypted for Impact"
+    },
+    {
+      "capability_id": "CVE-2021-34473",
+      "capability_description": "Microsoft Exchange Server Remote Code Execution Vulnerability",
+      "mapping_type": "secondary_impact",
+      "attack_object_id": "T1048.003",
+      "attack_object_name": "Exfiltration Over Unencrypted Non-C2 Protocol"
+    },
+    {
+      "capability_id": "CVE-2021-34473",
+      "capability_description": "Microsoft Exchange Server Remote Code Execution Vulnerability",
+      "mapping_type": "secondary_impact",
+      "attack_object_id": "T1136",
+      "attack_object_name": "Create Account"
+    },
+    {
+      "capability_id": "CVE-2021-34473",
+      "capability_description": "Microsoft Exchange Server Remote Code Execution Vulnerability",
+      "mapping_type": "primary_impact",
+      "attack_object_id": "T1053.005",
+      "attack_object_name": "Scheduled Task"
+    },
+    {
+      "capability_id": "CVE-2021-34473",
+      "capability_description": "Microsoft Exchange Server Remote Code Execution Vulnerability",
+      "mapping_type": "exploitation_technique",
+      "attack_object_id": "T1190",
+      "attack_object_name": "Exploit Public-Facing Application"
+    },
+    {
+      "capability_id": "CVE-2021-40539",
+      "capability_description": "Zoho ManageEngine ADSelfService Plus Authentication Bypass Vulnerability",
+      "mapping_type": "secondary_impact",
+      "attack_object_id": "T1573.001",
+      "attack_object_name": "Symmetric Cryptography"
+    },
+    {
+      "capability_id": "CVE-2021-40539",
+      "capability_description": "Zoho ManageEngine ADSelfService Plus Authentication Bypass Vulnerability",
+      "mapping_type": "secondary_impact",
+      "attack_object_id": "T1560.001",
+      "attack_object_name": "Archive via Utility"
+    },
+    {
+      "capability_id": "CVE-2021-40539",
+      "capability_description": "Zoho ManageEngine ADSelfService Plus Authentication Bypass Vulnerability",
+      "mapping_type": "secondary_impact",
+      "attack_object_id": "T1087.002",
+      "attack_object_name": "Domain Account"
+    },
+    {
+      "capability_id": "CVE-2021-40539",
+      "capability_description": "Zoho ManageEngine ADSelfService Plus Authentication Bypass Vulnerability",
+      "mapping_type": "secondary_impact",
+      "attack_object_id": "T1070.004",
+      "attack_object_name": "File Deletion"
+    },
+    {
+      "capability_id": "CVE-2021-40539",
+      "capability_description": "Zoho ManageEngine ADSelfService Plus Authentication Bypass Vulnerability",
+      "mapping_type": "secondary_impact",
+      "attack_object_id": "T1047",
+      "attack_object_name": "Windows Management Instrumentation"
+    },
+    {
+      "capability_id": "CVE-2021-40539",
+      "capability_description": "Zoho ManageEngine ADSelfService Plus Authentication Bypass Vulnerability",
+      "mapping_type": "secondary_impact",
+      "attack_object_id": "T1003.003",
+      "attack_object_name": "NTDS"
+    },
+    {
+      "capability_id": "CVE-2021-40539",
+      "capability_description": "Zoho ManageEngine ADSelfService Plus Authentication Bypass Vulnerability",
+      "mapping_type": "secondary_impact",
+      "attack_object_id": "T1136",
+      "attack_object_name": "Create Account"
+    },
+    {
+      "capability_id": "CVE-2021-40539",
+      "capability_description": "Zoho ManageEngine ADSelfService Plus Authentication Bypass Vulnerability",
+      "mapping_type": "secondary_impact",
+      "attack_object_id": "T1218",
+      "attack_object_name": "System Binary Proxy Execution"
+    },
+    {
+      "capability_id": "CVE-2021-40539",
+      "capability_description": "Zoho ManageEngine ADSelfService Plus Authentication Bypass Vulnerability",
+      "mapping_type": "secondary_impact",
+      "attack_object_id": "T1003",
+      "attack_object_name": "OS Credential Dumping"
+    },
+    {
+      "capability_id": "CVE-2021-40539",
+      "capability_description": "Zoho ManageEngine ADSelfService Plus Authentication Bypass Vulnerability",
+      "mapping_type": "secondary_impact",
+      "attack_object_id": "T1140",
+      "attack_object_name": "Deobfuscate/Decode Files or Information"
+    },
+    {
+      "capability_id": "CVE-2021-40539",
+      "capability_description": "Zoho ManageEngine ADSelfService Plus Authentication Bypass Vulnerability",
+      "mapping_type": "secondary_impact",
+      "attack_object_id": "T1027",
+      "attack_object_name": "Obfuscated Files or Information"
+    },
+    {
+      "capability_id": "CVE-2021-40539",
+      "capability_description": "Zoho ManageEngine ADSelfService Plus Authentication Bypass Vulnerability",
+      "mapping_type": "primary_impact",
+      "attack_object_id": "T1505.003",
+      "attack_object_name": "Web Shell"
+    },
+    {
+      "capability_id": "CVE-2021-40539",
+      "capability_description": "Zoho ManageEngine ADSelfService Plus Authentication Bypass Vulnerability",
+      "mapping_type": "exploitation_technique",
+      "attack_object_id": "T1190",
+      "attack_object_name": "Exploit Public-Facing Application"
+    },
+    {
+      "capability_id": "CVE-2021-44228",
+      "capability_description": "Apache Log4j2 Remote Code Execution Vulnerability",
+      "mapping_type": "secondary_impact",
+      "attack_object_id": "T1486",
+      "attack_object_name": "Data Encrypted for Impact"
+    },
+    {
+      "capability_id": "CVE-2021-44228",
+      "capability_description": "Apache Log4j2 Remote Code Execution Vulnerability",
+      "mapping_type": "secondary_impact",
+      "attack_object_id": "T1496",
+      "attack_object_name": "Resource Hijacking"
+    },
+    {
+      "capability_id": "CVE-2021-44228",
+      "capability_description": "Apache Log4j2 Remote Code Execution Vulnerability",
+      "mapping_type": "secondary_impact",
+      "attack_object_id": "T1608.001",
+      "attack_object_name": "Upload Malware"
+    },
+    {
+      "capability_id": "CVE-2021-44228",
+      "capability_description": "Apache Log4j2 Remote Code Execution Vulnerability",
+      "mapping_type": "secondary_impact",
+      "attack_object_id": "T1505.003",
+      "attack_object_name": "Web Shell"
+    },
+    {
+      "capability_id": "CVE-2021-44228",
+      "capability_description": "Apache Log4j2 Remote Code Execution Vulnerability",
+      "mapping_type": "exploitation_technique",
+      "attack_object_id": "T1190",
+      "attack_object_name": "Exploit Public-Facing Application"
+    },
+    {
       "capability_id": "CVE-2020-1472",
       "capability_description": "Microsoft Netlogon Privilege Escalation Vulnerability",
       "mapping_type": "secondary_impact",
@@ -78,6 +267,48 @@
       "attack_object_name": "Brute Force"
     },
     {
+      "capability_id": "CVE-2017-11882",
+      "capability_description": "Microsoft Office Memory Corruption Vulnerability",
+      "mapping_type": "primary_impact",
+      "attack_object_id": "T1059",
+      "attack_object_name": "Command and Scripting Interpreter"
+    },
+    {
+      "capability_id": "CVE-2017-11882",
+      "capability_description": "Microsoft Office Memory Corruption Vulnerability",
+      "mapping_type": "exploitation_technique",
+      "attack_object_id": "T1566.001",
+      "attack_object_name": "Spearphishing Attachment"
+    },
+    {
+      "capability_id": "CVE-2019-11510",
+      "capability_description": "Ivanti Pulse Connect Secure Arbitrary File Read Vulnerability",
+      "mapping_type": "secondary_impact",
+      "attack_object_id": "T1083",
+      "attack_object_name": "File and Directory Discovery"
+    },
+    {
+      "capability_id": "CVE-2019-11510",
+      "capability_description": "Ivanti Pulse Connect Secure Arbitrary File Read Vulnerability",
+      "mapping_type": "secondary_impact",
+      "attack_object_id": "T1552.001",
+      "attack_object_name": "Credentials In Files"
+    },
+    {
+      "capability_id": "CVE-2019-11510",
+      "capability_description": "Ivanti Pulse Connect Secure Arbitrary File Read Vulnerability",
+      "mapping_type": "primary_impact",
+      "attack_object_id": "T1059",
+      "attack_object_name": "Command and Scripting Interpreter"
+    },
+    {
+      "capability_id": "CVE-2019-11510",
+      "capability_description": "Ivanti Pulse Connect Secure Arbitrary File Read Vulnerability",
+      "mapping_type": "exploitation_technique",
+      "attack_object_id": "T1133",
+      "attack_object_name": "External Remote Services"
+    },
+    {
       "capability_id": "CVE-2019-19781",
       "capability_description": "Citrix ADC, Gateway, and SD-WAN WANOP Appliance Code Execution Vulnerability",
       "mapping_type": "secondary_impact",
@@ -97,6 +328,76 @@
       "mapping_type": "exploitation_technique",
       "attack_object_id": "T1133",
       "attack_object_name": "External Remote Services"
+    },
+    {
+      "capability_id": "CVE-2021-40539",
+      "capability_description": "Zoho ManageEngine ADSelfService Plus Authentication Bypass Vulnerability",
+      "mapping_type": "secondary_impact",
+      "attack_object_id": "T1505.003",
+      "attack_object_name": "Web Shell"
+    },
+    {
+      "capability_id": "CVE-2018-13379",
+      "capability_description": "Fortinet FortiOS SSL VPN Path Traversal Vulnerability",
+      "mapping_type": "exploitation_technique",
+      "attack_object_id": "T1190",
+      "attack_object_name": "Exploit Public-Facing Application"
+    },
+    {
+      "capability_id": "CVE-2022-26138",
+      "capability_description": "Atlassian Questions For Confluence App Hard-coded Credentials Vulnerability",
+      "mapping_type": "exploitation_technique",
+      "attack_object_id": "T1552.001",
+      "attack_object_name": "Credentials In Files"
+    },
+    {
+      "capability_id": "CVE-2023-34362",
+      "capability_description": "Progress MOVEit Transfer SQL Injection Vulnerability",
+      "mapping_type": "secondary_impact",
+      "attack_object_id": "T1531",
+      "attack_object_name": "Account Access Removal"
+    },
+    {
+      "capability_id": "CVE-2023-34362",
+      "capability_description": "Progress MOVEit Transfer SQL Injection Vulnerability",
+      "mapping_type": "secondary_impact",
+      "attack_object_id": "T1136",
+      "attack_object_name": "Create Account"
+    },
+    {
+      "capability_id": "CVE-2023-34362",
+      "capability_description": "Progress MOVEit Transfer SQL Injection Vulnerability",
+      "mapping_type": "secondary_impact",
+      "attack_object_id": "T1005",
+      "attack_object_name": "Data from Local System"
+    },
+    {
+      "capability_id": "CVE-2023-34362",
+      "capability_description": "Progress MOVEit Transfer SQL Injection Vulnerability",
+      "mapping_type": "secondary_impact",
+      "attack_object_id": "T1082",
+      "attack_object_name": "System Information Discovery"
+    },
+    {
+      "capability_id": "CVE-2023-34362",
+      "capability_description": "Progress MOVEit Transfer SQL Injection Vulnerability",
+      "mapping_type": "secondary_impact",
+      "attack_object_id": "T1105",
+      "attack_object_name": "Ingress Tool Transfer"
+    },
+    {
+      "capability_id": "CVE-2023-34362",
+      "capability_description": "Progress MOVEit Transfer SQL Injection Vulnerability",
+      "mapping_type": "primary_impact",
+      "attack_object_id": "T1059",
+      "attack_object_name": "Command and Scripting Interpreter"
+    },
+    {
+      "capability_id": "CVE-2023-34362",
+      "capability_description": "Progress MOVEit Transfer SQL Injection Vulnerability",
+      "mapping_type": "exploitation_technique",
+      "attack_object_id": "T1190",
+      "attack_object_name": "Exploit Public-Facing Application"
     },
     {
       "capability_id": "CVE-2020-1472",

@@ -16,6 +16,51 @@
       ]
     },
     {
+      "cve_id": "CVE-2017-11882",
+      "description": "Microsoft Office 2007 Service Pack 3, Microsoft Office 2010 Service Pack 2, Microsoft Office 2013 Service Pack 1, and Microsoft Office 2016 allow an attacker to run arbitrary code in the context of the current user by failing to properly handle objects in memory, aka \"Microsoft Office Memory Corruption Vulnerability\". This CVE ID is unique from CVE-2017-11884.",
+      "cvss_score": 7.8,
+      "published_date": "2017-11-15",
+      "cwe_ids": [
+        "CWE-119"
+      ],
+      "affected_products": [
+        {
+          "vendor": "Microsoft Corporation",
+          "product": "Microsoft Office"
+        }
+      ]
+    },
+    {
+      "cve_id": "CVE-2018-13379",
+      "description": "An Improper Limitation of a Pathname to a Restricted Directory (\"Path Traversal\") in Fortinet FortiOS 6.0.0 to 6.0.4, 5.6.3 to 5.6.7 and 5.4.6 to 5.4.12 and FortiProxy 2.0.0, 1.2.0 to 1.2.8, 1.1.0 to 1.1.6, 1.0.0 to 1.0.7 under SSL VPN web portal allows an unauthenticated attacker to download system files via special crafted HTTP resource requests.",
+      "cvss_score": 9.8,
+      "published_date": "2019-06-04",
+      "cwe_ids": [
+        "CWE-22"
+      ],
+      "affected_products": [
+        {
+          "vendor": "Fortinet",
+          "product": "Fortinet FortiOS, FortiProxy"
+        }
+      ]
+    },
+    {
+      "cve_id": "CVE-2019-11510",
+      "description": "In Pulse Secure Pulse Connect Secure (PCS) 8.2 before 8.2R12.1, 8.3 before 8.3R7.1, and 9.0 before 9.0R3.4, an unauthenticated remote attacker can send a specially crafted URI to perform an arbitrary file reading vulnerability .",
+      "cvss_score": 10.0,
+      "published_date": "2019-05-08",
+      "cwe_ids": [
+        "CWE-22"
+      ],
+      "affected_products": [
+        {
+          "vendor": "n/a",
+          "product": "n/a"
+        }
+      ]
+    },
+    {
       "cve_id": "CVE-2019-19781",
       "description": "An issue was discovered in Citrix Application Delivery Controller (ADC) and Gateway 10.5, 11.1, 12.0, 12.1, and 13.0. They allow Directory Traversal.",
       "cvss_score": 9.8,
@@ -92,6 +137,25 @@
         {
           "vendor": "Microsoft",
           "product": "Windows Server version 20H2"
+        }
+      ]
+    },
+    {
+      "cve_id": "CVE-2021-21972",
+      "description": "The vSphere Client (HTML5) contains a remote code execution vulnerability in a vCenter Server plugin. A malicious actor with network access to port 443 may exploit this issue to execute commands with unrestricted privileges on the underlying operating system that hosts vCenter Server. This affects VMware vCenter Server (7.x before 7.0 U1c, 6.7 before 6.7 U3l and 6.5 before 6.5 U3n) and VMware Cloud Foundation (4.x before 4.2 and 3.x before 3.10.1.2).",
+      "cvss_score": 9.8,
+      "published_date": "2021-02-24",
+      "cwe_ids": [
+        "CWE-22"
+      ],
+      "affected_products": [
+        {
+          "vendor": "n/a",
+          "product": "VMware vCenter Server"
+        },
+        {
+          "vendor": "n/a",
+          "product": "VMware Cloud Foundation"
         }
       ]
     },
@@ -203,6 +267,268 @@
       ]
     },
     {
+      "cve_id": "CVE-2021-27065",
+      "description": "Microsoft Exchange Server Remote Code Execution Vulnerability",
+      "cvss_score": 7.8,
+      "published_date": "2021-03-03",
+      "cwe_ids": [
+        "CWE-22"
+      ],
+      "affected_products": [
+        {
+          "vendor": "Microsoft",
+          "product": "Microsoft Exchange Server 2019"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Microsoft Exchange Server 2013 Cumulative Update 22"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Microsoft Exchange Server 2019 Cumulative Update 2"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Microsoft Exchange Server 2016 Cumulative Update 13"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Microsoft Exchange Server 2013 Cumulative Update 23"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Microsoft Exchange Server 2019 Cumulative Update 3"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Microsoft Exchange Server 2016 Cumulative Update 14"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Microsoft Exchange Server 2019 Cumulative Update 4"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Microsoft Exchange Server 2016 Cumulative Update 15"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Microsoft Exchange Server 2019 Cumulative Update 5"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Microsoft Exchange Server 2019 Cumulative Update 6"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Microsoft Exchange Server 2016 Cumulative Update 16"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Microsoft Exchange Server 2016 Cumulative Update 17"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Microsoft Exchange Server 2019 Cumulative Update 7"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Microsoft Exchange Server 2016 Cumulative Update 18"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Microsoft Exchange Server 2016 Cumulative Update 19"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Microsoft Exchange Server 2019 Cumulative Update 8"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Microsoft Exchange Server 2013 Service Pack 1"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Microsoft Exchange Server 2013 Cumulative Update 21"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Microsoft Exchange Server 2016 Cumulative Update 12"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Microsoft Exchange Server 2016 Cumulative Update 8"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Microsoft Exchange Server 2019 Cumulative Update 1"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Microsoft Exchange Server 2016 Cumulative Update 9"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Microsoft Exchange Server 2016 Cumulative Update 10"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Microsoft Exchange Server 2016 Cumulative Update 11"
+        }
+      ]
+    },
+    {
+      "cve_id": "CVE-2021-34473",
+      "description": "Microsoft Exchange Server Remote Code Execution Vulnerability",
+      "cvss_score": 9.1,
+      "published_date": "2021-07-14",
+      "cwe_ids": [
+        "CWE-918"
+      ],
+      "affected_products": [
+        {
+          "vendor": "Microsoft",
+          "product": "Microsoft Exchange Server 2013 Cumulative Update 23"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Microsoft Exchange Server 2019 Cumulative Update 9"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Microsoft Exchange Server 2016 Cumulative Update 20"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Microsoft Exchange Server 2016 Cumulative Update 19"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Microsoft Exchange Server 2019 Cumulative Update 8"
+        }
+      ]
+    },
+    {
+      "cve_id": "CVE-2021-34527",
+      "description": "<p>A remote code execution vulnerability exists when the Windows Print Spooler service improperly performs privileged file operations. An attacker who successfully exploited this vulnerability could run arbitrary code with SYSTEM privileges. An attacker could then install programs; view, change, or delete data; or create new accounts with full user rights.</p>\n<p>UPDATE July 7, 2021: The security update for Windows Server 2012, Windows Server 2016 and Windows 10, Version 1607 have been released. Please see the Security Updates table for the applicable update for your system. We recommend that you install these updates immediately. If you are unable to install these updates, see the FAQ and Workaround sections in this CVE for information on how to help protect your system from this vulnerability.</p>\n<p>In addition to installing the updates, in order to secure your system, you must confirm that the following registry settings are set to 0 (zero) or are not defined (<strong>Note</strong>: These registry keys do not exist by default, and therefore are already at the secure setting.), also that your Group Policy setting are correct (see FAQ):</p>\n<ul>\n<li>HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows NT\\Printers\\PointAndPrint</li>\n<li>NoWarningNoElevationOnInstall = 0 (DWORD) or not defined (default setting)</li>\n<li>UpdatePromptSettings = 0 (DWORD) or not defined (default setting)</li>\n</ul>\n<p><strong>Having NoWarningNoElevationOnInstall set to 1 makes your system vulnerable by design.</strong></p>\n<p>UPDATE July 6, 2021: Microsoft has completed the investigation and has released security updates to address this vulnerability. Please see the Security Updates table for the applicable update for your system. We recommend that you install these updates immediately. If you are unable to install these updates, see the FAQ and Workaround sections in this CVE for information on how to help protect your system from this vulnerability. See also <a href=\"https://support.microsoft.com/topic/31b91c02-05bc-4ada-a7ea-183b129578a7\">KB5005010: Restricting installation of new printer drivers after applying the July 6, 2021 updates</a>.</p>\n<p>Note that the security updates released on and after July 6, 2021 contain protections for CVE-2021-1675 and the additional remote code execution exploit in the Windows Print Spooler service known as \u00e2\u20ac\u015bPrintNightmare\u00e2\u20ac\u0165, documented in CVE-2021-34527.</p>\n",
+      "cvss_score": 8.8,
+      "published_date": "2021-07-02",
+      "cwe_ids": [],
+      "affected_products": [
+        {
+          "vendor": "Microsoft",
+          "product": "Windows 10 Version 1809"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Windows Server 2019"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Windows Server 2019 (Server Core installation)"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Windows Server 2022"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Windows 10 Version 20H2"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Windows Server version 20H2"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Windows 11 version 21H2"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Windows 10 Version 21H2"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Windows 11 version 22H2"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Windows 10 Version 22H2"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Windows 10 Version 1507"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Windows 10 Version 1607"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Windows Server 2016"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Windows Server 2016 (Server Core installation)"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Windows 8.1"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Windows Server 2008 Service Pack 2"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Windows Server 2008 Service Pack 2 (Server Core installation)"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Windows Server 2008  Service Pack 2"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Windows Server 2008 R2 Service Pack 1"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Windows Server 2008 R2 Service Pack 1 (Server Core installation)"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Windows Server 2012"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Windows Server 2012 (Server Core installation)"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Windows Server 2012 R2"
+        },
+        {
+          "vendor": "Microsoft",
+          "product": "Windows Server 2012 R2 (Server Core installation)"
+        }
+      ]
+    },
+    {
+      "cve_id": "CVE-2021-40539",
+      "description": "Zoho ManageEngine ADSelfService Plus version 6113 and prior is vulnerable to REST API authentication bypass with resultant remote code execution.",
+      "cvss_score": 9.8,
+      "published_date": "2021-09-07",
+      "cwe_ids": [
+        "CWE-706"
+      ],
+      "affected_products": [
+        {
+          "vendor": "n/a",
+          "product": "n/a"
+        }
+      ]
+    },
+    {
       "cve_id": "CVE-2021-44228",
       "description": "Apache Log4j2 2.0-beta9 through 2.15.0 (excluding security releases 2.12.2, 2.12.3, and 2.3.1) JNDI features used in configuration, log messages, and parameters do not protect against attacker controlled LDAP and other JNDI related endpoints. An attacker who can control log messages or log message parameters can execute arbitrary code loaded from LDAP servers when message lookup substitution is enabled. From log4j 2.15.0, this behavior has been disabled by default. From version 2.16.0 (along with 2.12.2, 2.12.3, and 2.3.1), this functionality has been completely removed. Note that this vulnerability is specific to log4j-core and does not affect log4net, log4cxx, or other Apache Logging Services projects.",
       "cvss_score": 10.0,
@@ -217,6 +543,44 @@
         {
           "vendor": "Apache Software Foundation",
           "product": "Apache Log4j2"
+        }
+      ]
+    },
+    {
+      "cve_id": "CVE-2022-26138",
+      "description": "The Atlassian Questions For Confluence app for Confluence Server and Data Center creates a Confluence user account in the confluence-users group with the username disabledsystemuser and a hardcoded password. A remote, unauthenticated attacker with knowledge of the hardcoded password could exploit this to log into Confluence and access all content accessible to users in the confluence-users group. This user account is created when installing versions 2.7.34, 2.7.35, and 3.0.2 of the app.",
+      "cvss_score": 9.8,
+      "published_date": "2022-07-20",
+      "cwe_ids": [
+        "CWE-798"
+      ],
+      "affected_products": [
+        {
+          "vendor": "Atlassian",
+          "product": "Questions For Confluence"
+        }
+      ]
+    },
+    {
+      "cve_id": "CVE-2023-34362",
+      "description": "In Progress MOVEit Transfer before 2021.0.6 (13.0.6), 2021.1.4 (13.1.4), 2022.0.4 (14.0.4), 2022.1.5 (14.1.5), and 2023.0.1 (15.0.1), a SQL injection vulnerability has been found in the MOVEit Transfer web application that could allow an unauthenticated attacker to gain access to MOVEit Transfer's database. Depending on the database engine being used (MySQL, Microsoft SQL Server, or Azure SQL), an attacker may be able to infer information about the structure and contents of the database, and execute SQL statements that alter or delete database elements. NOTE: this is exploited in the wild in May and June 2023; exploitation of unpatched systems can occur via HTTP or HTTPS. All versions (e.g., 2020.0 and 2019x) before the five explicitly mentioned versions are affected, including older unsupported versions.",
+      "cvss_score": 9.8,
+      "published_date": "2023-06-02",
+      "cwe_ids": [
+        "CWE-89"
+      ],
+      "affected_products": [
+        {
+          "vendor": "n/a",
+          "product": "n/a"
+        },
+        {
+          "vendor": "progress",
+          "product": "moveit_transfer"
+        },
+        {
+          "vendor": "progress",
+          "product": "moveit_cloud"
         }
       ]
     }

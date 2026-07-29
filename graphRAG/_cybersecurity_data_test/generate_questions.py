@@ -1,7 +1,7 @@
 """Evaluation question generation.
 
 The generated question must not name the source identifier
-it is asking about , while still being answerable from that one record.
+it is asking about, while still being answerable from that one record.
 This forces the downstream RAG pipeline to actually retrieve the right node
 from the graph instead of pattern-matching an ID mentioned in the question.
 """
@@ -71,7 +71,14 @@ class MitigationCheckFact(pydantic.BaseModel):
     expected_answer: str  # "Yes" or "No"
 
 
-async def generate_question(client: instructor.Instructor, fact: Fact) -> str:
+def _is_usable_answer(value: str) -> bool:
+    if not value.strip():
+        return False
+    tokens = value.replace(",", " ").split()
+    return any(t.strip().lower() not in ("n/a", "n\\a", "none", "unknown") for t in tokens)
+
+
+async def generate_question(client: instructor.Instructor, fact: Fact) -> GeneratedQuestion:
     prompt = (
         f"Subject: {fact.subject_hint}\n"
         f"Field being asked about: {fact.field}\n"
@@ -110,36 +117,56 @@ def build_facts() -> tuple[list[Fact], list[MitigationCheckFact]]:
     mapping_data = json.loads(open("data/kev_attack_mapping.json").read())["mapping_objects"]
     
     facts: list[Fact] = []
+    skipped: list[str] = []
     
     for r in cve_data:
         hint = f"the vulnerability described as: \"{r['description'][:160]}...\""
-        facts.append(Fact(
-            subject_id=r["cve_id"],
-            subject_hint=hint,
-            field="CVSS score",
-            expected_answer=str(r["cvss_score"]),
-        ))
-        facts.append(Fact(
-            subject_id=r["cve_id"],
-            subject_hint=hint,
-            field="associated CWE weakness type(s)",
-            expected_answer=", ".join(r["cwe_ids"]),
-        ))
-        facts.append(Fact(
-            subject_id=r["cve_id"],
-            subject_hint=hint,
-            field="affected vendor/product",
-            expected_answer=", ".join(f"{p['vendor']} {p['product']}" for p in r["affected_products"]),
-        ))
+
+        cvss_answer = str(r["cvss_score"])
+        if _is_usable_answer(cvss_answer):
+            facts.append(Fact(
+                subject_id=r["cve_id"],
+                subject_hint=hint,
+                field="CVSS score",
+                expected_answer=cvss_answer,
+            ))
+        else:
+            skipped.append(f"{r['cve_id']} / CVSS score")
+
+        cwe_answer = ", ".join(r["cwe_ids"])
+        if _is_usable_answer(cwe_answer):
+            facts.append(Fact(
+                subject_id=r["cve_id"],
+                subject_hint=hint,
+                field="associated CWE weakness type(s)",
+                expected_answer=cwe_answer,
+            ))
+        else:
+            skipped.append(f"{r['cve_id']} / associated CWE weakness type(s)")
+
+        product_answer = ", ".join(f"{p['vendor']} {p['product']}" for p in r["affected_products"])
+        if _is_usable_answer(product_answer):
+            facts.append(Fact(
+                subject_id=r["cve_id"],
+                subject_hint=hint,
+                field="affected vendor/product",
+                expected_answer=product_answer,
+            ))
+        else:
+            skipped.append(f"{r['cve_id']} / affected vendor/product")
     
     for t in attack_data:
         hint = f"the ATT&CK entry described as: \"{t['description'][:160]}...\""
-        facts.append(Fact(
-            subject_id=t["technique_id"],
-            subject_hint=hint,
-            field="ATT&CK tactic category",
-            expected_answer=t["tactic"],
-        ))
+        tactic_answer = t["tactic"]
+        if _is_usable_answer(tactic_answer):
+            facts.append(Fact(
+                subject_id=t["technique_id"],
+                subject_hint=hint,
+                field="ATT&CK tactic category",
+                expected_answer=tactic_answer,
+            ))
+        else:
+            skipped.append(f"{t['technique_id']} / ATT&CK tactic category")
     
     exploitation_mappings = [m for m in mapping_data if m["mapping_type"] == "exploitation_technique"]
     seen_cves: set[str] = set()
@@ -148,12 +175,16 @@ def build_facts() -> tuple[list[Fact], list[MitigationCheckFact]]:
             continue
         seen_cves.add(m["capability_id"])
         cve_desc = next((r["description"][:120] for r in cve_data if r["cve_id"] == m["capability_id"]), m["capability_description"])
-        facts.append(Fact(
-            subject_id=f"{m['capability_id']}->{m['attack_object_id']}",
-            subject_hint=f"the vulnerability described as: \"{cve_desc}...\"",
-            field="ATT&CK exploitation technique",
-            expected_answer=f"{m['attack_object_id']} ({m['attack_object_name']})",
-        ))
+        mapping_answer = f"{m['attack_object_id']} ({m['attack_object_name']})"
+        if _is_usable_answer(mapping_answer):
+            facts.append(Fact(
+                subject_id=f"{m['capability_id']}->{m['attack_object_id']}",
+                subject_hint=f"the vulnerability described as: \"{cve_desc}...\"",
+                field="ATT&CK exploitation technique",
+                expected_answer=mapping_answer,
+            ))
+        else:
+            skipped.append(f"{m['capability_id']}->{m['attack_object_id']} / ATT&CK exploitation technique")
     
     rng = random.Random(RANDOM_SEED)
     all_mitigations = sorted({m for t in attack_data for m in t["mitigations"]})
@@ -178,6 +209,11 @@ def build_facts() -> tuple[list[Fact], list[MitigationCheckFact]]:
                 candidate_mitigation=m,
                 expected_answer="No",
             ))
+
+    if skipped:
+        print(f"Skipped {len(skipped)} fact(s) with no usable ground truth in the source data:")
+        for s in skipped:
+            print(f"  - {s}")
  
     return facts, mitigation_facts
 
@@ -196,7 +232,7 @@ async def main() -> None:
             "question": generated.question,
             "expected_answer": fact.expected_answer,
         })
-        print(f"[{fact.subject_id}] {fact.field} -> {generated.question}")
+        print(f"[{fact.subject_id}] {fact.field} -> {generated.question} -> {fact.expected_answer}")
     
     for fact in mitigation_facts:
         generated = await generate_mitigation_question(client, fact)
@@ -207,7 +243,7 @@ async def main() -> None:
             "question": generated.question,
             "expected_answer": fact.expected_answer,
         })
-        print(f"[{fact.subject_id}] mitigation check ({fact.candidate_mitigation}) -> {generated.question}")
+        print(f"[{fact.subject_id}] mitigation check ({fact.candidate_mitigation}) -> {generated.question} -> {fact.expected_answer}")
     
     with open("results/eval_questions.json", "w") as f:
         json.dump({"questions": entries}, f, indent=2)

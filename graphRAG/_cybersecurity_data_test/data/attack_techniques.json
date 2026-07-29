@@ -1,6 +1,58 @@
 {
   "techniques": [
     {
+      "technique_id": "T1053.005",
+      "name": "Scheduled Task",
+      "tactic": "Execution",
+      "description": "Adversaries may abuse the Windows Task Scheduler to perform task scheduling for initial or recurring execution of malicious code. There are multiple ways to access the Task Scheduler in Windows. The [schtasks](https://attack.mitre.org/software/S0111) utility can be run directly on the command line, or the Task Scheduler can be opened through the GUI within the Administrator Tools section of the Control Panel. In some cases, adversaries have used a .NET wrapper for the Windows Task Scheduler, and",
+      "mitigations": [
+        "Privileged Account Management",
+        "User Account Management",
+        "Audit",
+        "Operating System Configuration"
+      ]
+    },
+    {
+      "technique_id": "T1560.001",
+      "name": "Archive via Utility",
+      "tactic": "Collection",
+      "description": "Adversaries may use utilities to compress and/or encrypt collected data prior to exfiltration. Many utilities include functionalities to compress, encrypt, or otherwise package data into a format that is easier/more secure to transport.",
+      "mitigations": [
+        "Audit"
+      ]
+    },
+    {
+      "technique_id": "T1047",
+      "name": "Windows Management Instrumentation",
+      "tactic": "Execution",
+      "description": "Adversaries may abuse Windows Management Instrumentation (WMI) to execute malicious commands and payloads. WMI is designed for programmers and is the infrastructure for management data and operations on Windows systems.(Citation: WMI 1-3) WMI is an administration feature that provides a uniform environment to access Windows system components.",
+      "mitigations": [
+        "Privileged Account Management",
+        "Behavior Prevention on Endpoint",
+        "User Account Management",
+        "Execution Prevention",
+        "Windows Management Instrumentation Mitigation"
+      ]
+    },
+    {
+      "technique_id": "T1003",
+      "name": "OS Credential Dumping",
+      "tactic": "Credential Access",
+      "description": "Adversaries may attempt to dump credentials to obtain account login and credential material, normally in the form of a hash or a clear text password. Credentials can be obtained from OS caches, memory, or structures.(Citation: Brining MimiKatz to Unix) Credentials can then be used to perform [Lateral Movement](https://attack.mitre.org/tactics/TA0008) and access restricted information.",
+      "mitigations": [
+        "Encrypt Sensitive Information",
+        "Behavior Prevention on Endpoint",
+        "Password Policies",
+        "User Training",
+        "Privileged Account Management",
+        "Privileged Process Integrity",
+        "Credential Access Protection",
+        "Active Directory Configuration",
+        "Operating System Configuration",
+        "Credential Dumping Mitigation"
+      ]
+    },
+    {
       "technique_id": "T1133",
       "name": "External Remote Services",
       "tactic": "Persistence",
@@ -23,6 +75,37 @@
       ]
     },
     {
+      "technique_id": "T1573.001",
+      "name": "Symmetric Cryptography",
+      "tactic": "Command And Control",
+      "description": "Adversaries may employ a known symmetric encryption algorithm to conceal command and control traffic rather than relying on any inherent protections provided by a communication protocol. Symmetric encryption algorithms use the same key for plaintext encryption and ciphertext decryption. Common symmetric encryption algorithms include AES, DES, 3DES, Blowfish, and RC4.",
+      "mitigations": [
+        "Network Intrusion Prevention"
+      ]
+    },
+    {
+      "technique_id": "T1566.001",
+      "name": "Spearphishing Attachment",
+      "tactic": "Initial Access",
+      "description": "Adversaries may send spearphishing emails with a malicious attachment in an attempt to gain access to victim systems. Spearphishing attachment is a specific variant of spearphishing. Spearphishing attachment is different from other forms of spearphishing in that it employs the use of malware attached to an email. All forms of spearphishing are electronically delivered social engineering targeted at a specific individual, company, or industry. In this scenario, adversaries attach a file to the sp",
+      "mitigations": [
+        "Antivirus/Antimalware",
+        "Network Intrusion Prevention",
+        "Software Configuration",
+        "User Training",
+        "Restrict Web-Based Content"
+      ]
+    },
+    {
+      "technique_id": "T1082",
+      "name": "System Information Discovery",
+      "tactic": "Discovery",
+      "description": "An adversary may attempt to get detailed information about the operating system and hardware, including version, patches, hotfixes, service packs, and architecture. Adversaries may use the information from [System Information Discovery](https://attack.mitre.org/techniques/T1082) during automated discovery to shape follow-on behaviors, including whether or not the adversary fully infects the target and/or attempts specific actions.",
+      "mitigations": [
+        "System Information Discovery Mitigation"
+      ]
+    },
+    {
       "technique_id": "T1005",
       "name": "Data from Local System",
       "tactic": "Collection",
@@ -30,6 +113,24 @@
       "mitigations": [
         "Data Loss Prevention",
         "Data from Local System Mitigation"
+      ]
+    },
+    {
+      "technique_id": "T1140",
+      "name": "Deobfuscate/Decode Files or Information",
+      "tactic": "Defense Evasion",
+      "description": "Adversaries may use [Obfuscated Files or Information](https://attack.mitre.org/techniques/T1027) to hide artifacts of an intrusion from analysis. They may require separate mechanisms to decode or deobfuscate that information depending on how they intend to use it. Methods for doing that include built-in functionality of malware or by using utilities present on the system.",
+      "mitigations": [
+        "Deobfuscate/Decode Files or Information Mitigation"
+      ]
+    },
+    {
+      "technique_id": "T1608.001",
+      "name": "Upload Malware",
+      "tactic": "Resource Development",
+      "description": "Adversaries may upload malware to third-party or adversary controlled infrastructure to make it accessible during targeting. Malicious software can include payloads, droppers, post-compromise tools, backdoors, and a variety of other malicious content. Adversaries may upload malware to support their operations, such as making a payload available to a victim network to enable [Ingress Tool Transfer](https://attack.mitre.org/techniques/T1105) by placing it on an Internet accessible web server.",
+      "mitigations": [
+        "Pre-compromise"
       ]
     },
     {
@@ -45,6 +146,23 @@
         "Exploit Protection",
         "Update Software",
         "Exploit Public-Facing Application Mitigation"
+      ]
+    },
+    {
+      "technique_id": "T1218",
+      "name": "System Binary Proxy Execution",
+      "tactic": "Defense Evasion",
+      "description": "Adversaries may bypass process and/or signature-based defenses by proxying execution of malicious content with signed, or otherwise trusted, binaries. Binaries used in this technique are often Microsoft-signed files, indicating that they have been either downloaded from Microsoft or are already native in the operating system.(Citation: LOLBAS Project) Binaries signed with trusted digital certificates can typically execute on Windows systems protected by digital signature validation. Several Micr",
+      "mitigations": [
+        "Exploit Protection",
+        "Filter Network Traffic",
+        "Privileged Account Management",
+        "Execution Prevention",
+        "Disable or Remove Feature or Program",
+        "Restrict Web-Based Content",
+        "Signed Binary Proxy Execution Mitigation",
+        "Privileged Account Management",
+        "Execution Prevention"
       ]
     },
     {
@@ -111,6 +229,19 @@
       ]
     },
     {
+      "technique_id": "T1552.001",
+      "name": "Credentials In Files",
+      "tactic": "Credential Access",
+      "description": "Adversaries may search local file systems and remote file shares for files containing insecurely stored credentials. These can be files created by users to store their own credentials, shared credential stores for a group of individuals, configuration files containing passwords for a system or service, or source code/binary files containing embedded passwords.",
+      "mitigations": [
+        "User Training",
+        "Audit",
+        "Restrict File and Directory Permissions",
+        "Password Policies",
+        "Credentials in Files Mitigation"
+      ]
+    },
+    {
       "technique_id": "T1110",
       "name": "Brute Force",
       "tactic": "Credential Access",
@@ -147,6 +278,26 @@
       ]
     },
     {
+      "technique_id": "T1531",
+      "name": "Account Access Removal",
+      "tactic": "Impact",
+      "description": "Adversaries may interrupt availability of system and network resources by inhibiting access to accounts utilized by legitimate users. Accounts may be deleted, locked, or manipulated (ex: changed credentials) to remove access to accounts. Adversaries may also subsequently log off and/or perform a [System Shutdown/Reboot](https://attack.mitre.org/techniques/T1529) to set malicious changes into place.(Citation: CarbonBlack LockerGoga 2019)(Citation: Unit42 LockerGoga 2019)",
+      "mitigations": []
+    },
+    {
+      "technique_id": "T1027",
+      "name": "Obfuscated Files or Information",
+      "tactic": "Defense Evasion",
+      "description": "Adversaries may attempt to make an executable or file difficult to discover or analyze by encrypting, encoding, or otherwise obfuscating its contents on the system or in transit. This is common behavior that can be used across different platforms and the network to evade defenses. ",
+      "mitigations": [
+        "Audit",
+        "Behavior Prevention on Endpoint",
+        "User Training",
+        "Antivirus/Antimalware",
+        "Obfuscated Files or Information Mitigation"
+      ]
+    },
+    {
       "technique_id": "T1486",
       "name": "Data Encrypted for Impact",
       "tactic": "Impact",
@@ -155,6 +306,71 @@
         "Behavior Prevention on Endpoint",
         "Data Backup",
         "Data Encrypted for Impact Mitigation"
+      ]
+    },
+    {
+      "technique_id": "T1496",
+      "name": "Resource Hijacking",
+      "tactic": "Impact",
+      "description": "Adversaries may leverage the resources of co-opted systems to complete resource-intensive tasks, which may impact system and/or hosted service availability. ",
+      "mitigations": [
+        "Resource Hijacking Mitigation"
+      ]
+    },
+    {
+      "technique_id": "T1070.004",
+      "name": "File Deletion",
+      "tactic": "Defense Evasion",
+      "description": "Adversaries may delete files left behind by the actions of their intrusion activity. Malware, tools, or other non-native files dropped or created on a system by an adversary (ex: [Ingress Tool Transfer](https://attack.mitre.org/techniques/T1105)) may leave traces to indicate to what was done within a network and how. Removal of these files can occur during an intrusion, or as part of a post-intrusion process to minimize the adversary's footprint.",
+      "mitigations": [
+        "File Deletion Mitigation"
+      ]
+    },
+    {
+      "technique_id": "T1136",
+      "name": "Create Account",
+      "tactic": "Persistence",
+      "description": "Adversaries may create an account to maintain access to victim systems.(Citation: Symantec WastedLocker June 2020) With a sufficient level of access, creating such accounts may be used to establish secondary credentialed access that do not require persistent remote access tools to be deployed on the system.",
+      "mitigations": [
+        "Network Segmentation",
+        "Operating System Configuration",
+        "Multi-factor Authentication",
+        "Privileged Account Management",
+        "Create Account Mitigation"
+      ]
+    },
+    {
+      "technique_id": "T1105",
+      "name": "Ingress Tool Transfer",
+      "tactic": "Command And Control",
+      "description": "Adversaries may transfer tools or other files from an external system into a compromised environment. Tools or files may be copied from an external adversary-controlled system to the victim network through the command and control channel or through alternate protocols such as [ftp](https://attack.mitre.org/software/S0095). Once present, adversaries may also transfer/spread tools between victim devices within a compromised environment (i.e. [Lateral Tool Transfer](https://attack.mitre.org/techniq",
+      "mitigations": [
+        "Network Intrusion Prevention",
+        "Remote File Copy Mitigation"
+      ]
+    },
+    {
+      "technique_id": "T1003.003",
+      "name": "NTDS",
+      "tactic": "Credential Access",
+      "description": "Adversaries may attempt to access or create a copy of the Active Directory domain database in order to steal credential information, as well as obtain other information about domain members such as devices, users, and access rights. By default, the NTDS file (NTDS.dit) is located in <code>%SystemRoot%\\NTDS\\Ntds.dit</code> of a domain controller.(Citation: Wikipedia Active Directory)",
+      "mitigations": [
+        "Password Policies",
+        "Privileged Account Management",
+        "User Training",
+        "Encrypt Sensitive Information"
+      ]
+    },
+    {
+      "technique_id": "T1048.003",
+      "name": "Exfiltration Over Unencrypted Non-C2 Protocol",
+      "tactic": "Exfiltration",
+      "description": "Adversaries may steal data by exfiltrating it over an un-encrypted network protocol other than that of the existing command and control channel. The data may also be sent to an alternate network location from the main command and control server.(Citation: copy_cmd_cisco)",
+      "mitigations": [
+        "Network Intrusion Prevention",
+        "Data Loss Prevention",
+        "Filter Network Traffic",
+        "Network Segmentation"
       ]
     }
   ]
