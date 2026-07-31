@@ -14,7 +14,7 @@ QUESTIONS_PATH = WORKSPACE / "questions_with_answers.json"
 RESULTS_PATH = WORKSPACE / "results.json"
 
 OLLAMA_BASE_URL = "http://localhost:11434/v1"
-LLM_MODEL = "llama3.1:8b"
+LLM_MODEL = "llama3.1:70b"
 
 
 def write_graphrag_settings() -> None:

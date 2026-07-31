@@ -5,6 +5,7 @@ import json
 import os
 from collections import defaultdict
 from pathlib import Path
+from functools import partial
 
 from lightrag import LightRAG, QueryParam
 from lightrag.kg.shared_storage import initialize_pipeline_status
@@ -17,8 +18,9 @@ WORKING_ROOT = TRACK_DIR / "data" / "lightrag_storage"
 PREDICTIONS_PATH = TRACK_DIR / "data" / "predictions.json"
 
 OLLAMA_HOST = "http://localhost:11434"
-LLM_MODEL = "llama3.1:8b"
-EMBED_MODEL = "nomic-embed-text"
+LLM_MODEL = "llama3.1:70b"
+EMBED_MODEL = "qwen3-embedding:8b"
+EMBED_DIM = 4096
 
 
 async def build_rag(working_dir: Path) -> LightRAG:
@@ -29,9 +31,9 @@ async def build_rag(working_dir: Path) -> LightRAG:
         llm_model_name=LLM_MODEL,
         llm_model_kwargs={"host": OLLAMA_HOST, "options": {"num_ctx": 32768}},
         embedding_func=EmbeddingFunc(
-            embedding_dim=768,
+            embedding_dim=EMBED_DIM,
             max_token_size=8192,
-            func=lambda texts: ollama_embed(texts, embed_model=EMBED_MODEL, host=OLLAMA_HOST),
+            func=partial(ollama_embed.func, embed_model=EMBED_MODEL, host=OLLAMA_HOST),
         ),
     )
     await rag.initialize_storages()
