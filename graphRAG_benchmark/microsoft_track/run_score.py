@@ -28,6 +28,8 @@ completion_models:
     auth_method: api_key
     api_key: ollama
     api_base: {OLLAMA_BASE_URL}
+    call_args:
+      timeout: 1800
 
 embedding_models:
   default_embedding_model:
@@ -36,6 +38,8 @@ embedding_models:
     auth_method: api_key
     api_key: ollama
     api_base: {OLLAMA_BASE_URL}
+    call_args:
+      timeout: 1800
 
 input:
   type: text
