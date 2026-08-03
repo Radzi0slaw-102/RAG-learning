@@ -15,29 +15,116 @@ RESULTS_PATH = WORKSPACE / "results.json"
 
 OLLAMA_BASE_URL = "http://localhost:11434/v1"
 LLM_MODEL = "llama3.1:70b"
+EMBED_MODEL = "qwen3-embedding:8b"
 
 
 def write_graphrag_settings() -> None:
-    # point graphrag's settings.yaml at the local Ollama server instead of OpenAI 
     settings_path = WORKSPACE / "settings.yaml"
     settings_path.write_text(f"""\
-models:
-  default_chat_model:
-    type: openai_chat
-    api_base: {OLLAMA_BASE_URL}
-    api_key: ollama
+completion_models:
+  default_completion_model:
+    model_provider: openai
     model: {LLM_MODEL}
-    model_supports_json: true
-  default_embedding_model:
-    type: openai_embedding
-    api_base: {OLLAMA_BASE_URL}
+    auth_method: api_key
     api_key: ollama
-    model: nomic-embed-text
+    api_base: {OLLAMA_BASE_URL}
+
+embedding_models:
+  default_embedding_model:
+    model_provider: openai
+    model: {EMBED_MODEL}
+    auth_method: api_key
+    api_key: ollama
+    api_base: {OLLAMA_BASE_URL}
+
+input:
+  type: text
+
+input_storage:
+  type: file
+  base_dir: "input"
+
+output_storage:
+  type: file
+  base_dir: "output"
+
+reporting:
+  type: file
+  base_dir: "logs"
+
+cache:
+  type: json
+  storage:
+    type: file
+    base_dir: "cache"
+
+vector_store:
+  type: lancedb
+  db_uri: output/lancedb
+
+embed_text:
+  embedding_model_id: default_embedding_model
+
+extract_graph:
+  completion_model_id: default_completion_model
+  prompt: "prompts/extract_graph.txt"
+  entity_types: [organization,person,geo,event]
+  max_gleanings: 1
+
+summarize_descriptions:
+  completion_model_id: default_completion_model
+  prompt: "prompts/summarize_descriptions.txt"
+  max_length: 500
+
+cluster_graph:
+  max_cluster_size: 10
+
+extract_claims:
+  enabled: false
+  completion_model_id: default_completion_model
+  prompt: "prompts/extract_claims.txt"
+  description: "Any claims or facts that could be relevant to information discovery."
+  max_gleanings: 1
+
+community_reports:
+  completion_model_id: default_completion_model
+  graph_prompt: "prompts/community_report_graph.txt"
+  text_prompt: "prompts/community_report_text.txt"
+  max_length: 2000
+  max_input_length: 8000
+
+local_search:
+  completion_model_id: default_completion_model
+  embedding_model_id: default_embedding_model
+  prompt: "prompts/local_search_system_prompt.txt"
+
+global_search:
+  completion_model_id: default_completion_model
+  map_prompt: "prompts/global_search_map_system_prompt.txt"
+  reduce_prompt: "prompts/global_search_reduce_system_prompt.txt"
+  knowledge_prompt: "prompts/global_search_knowledge_system_prompt.txt"
+
+drift_search:
+  completion_model_id: default_completion_model
+  embedding_model_id: default_embedding_model
+  prompt: "prompts/drift_search_system_prompt.txt"
+  reduce_prompt: "prompts/drift_search_reduce_prompt.txt"
+
+basic_search:
+  completion_model_id: default_completion_model
+  embedding_model_id: default_embedding_model
+  prompt: "prompts/basic_search_system_prompt.txt"
 """, encoding="utf-8")
 
 
-def _run(args: list[str]) -> subprocess.CompletedProcess:
-    # run a graphrag cli command with full stdout/stderr on failure
+def _run_streaming(args: list[str]) -> None:
+    print(f"Running: {' '.join(args)}")
+    result = subprocess.run(args)
+    if result.returncode != 0:
+        raise subprocess.CalledProcessError(result.returncode, args)
+
+
+def _run_captured(args: list[str]) -> subprocess.CompletedProcess:
     result = subprocess.run(args, capture_output=True, text=True, encoding="utf-8")
     if result.returncode != 0:
         print(f"Command failed: {' '.join(args)}")
@@ -45,20 +132,21 @@ def _run(args: list[str]) -> subprocess.CompletedProcess:
         print(f"--- stderr ---\n{result.stderr}")
         result.check_returncode()
     return result
-    
+
 
 def run_indexing() -> None:
     output_dir = WORKSPACE / "output"
-    settings_path = WORKSPACE / "settings.yaml"
+    if output_dir.exists() and any(output_dir.iterdir()):
+        return
     
-    if not settings_path.exists():
-        _run(["graphrag", "init", "--root", str(WORKSPACE)])
+    _run_streaming(["graphrag", "init", "--root", str(WORKSPACE), "--force",
+                     "--model", LLM_MODEL, "--embedding", EMBED_MODEL])
     write_graphrag_settings()
-    _run(["graphrag", "index", "--root", str(WORKSPACE)])
+    _run_streaming(["graphrag", "index", "--root", str(WORKSPACE), "--verbose"])
 
 
 def query(question: str, method: str = "local") -> str:
-    result = _run(["graphrag", "query", "--root", str(WORKSPACE), "--method", method, "--query", question])
+    result = _run_captured(["graphrag", "query", "--root", str(WORKSPACE), "--method", method, "--query", question])
     return result.stdout.strip()
 
 
