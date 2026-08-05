@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import os
 from collections import defaultdict
 
 import instructor
@@ -20,7 +21,8 @@ from query_graph import answer_question, fetch_context
 
 litellm.drop_params = True
 
-LLM_MODEL = "ollama/llama3.1:8b"
+LLM_MODEL = os.environ.get("LLM_MODEL", "ollama/llama3.1:8b")
+RESULTS_DIR = os.environ.get("RESULTS_DIR", "results")
 
 JUDGE_INSTRUCTION = """\
 You are grading a cybersecurity Q&A system. You will see a question, the
@@ -41,6 +43,20 @@ explanation attached, as long as the first clear yes/no signal in the
 answer is unambiguous. If the system's answer contradicts itself or
 gives no clear yes/no signal, mark it incorrect.
 """
+
+UNANSWERABLE_JUDGE_INSTRUCTION = """\
+You are grading a cybersecurity Q&A system on a question that has NO
+answer in the system's knowledge base (the subject does not exist in
+the data). The correct behavior is for the system to say it doesn't
+know or that it has no information on the subject. Mark it correct
+if the answer plainly admits it lacks the information (e.g. "I don't
+know", "the context does not specify this", "no information found",
+"there's no record of this"). Mark it incorrect if the answer states
+any specific fact, number, ID, or name as if it were real, even
+hedged - fabricating a plausible-sounding value is a failure here,
+not a partial success.
+"""
+
 
 class Verdict(pydantic.BaseModel):
     correct: bool = pydantic.Field(description="True if the system answer matches the correct answer.")
@@ -68,6 +84,8 @@ async def judge(client: instructor.Instructor, question: str, system_answer: str
                 reasoning=f"Direct comparison: system said '{normalized_system}', expected '{normalized_expected}'.",
             )
         instruction = YES_NO_JUDGE_INSTRUCTION
+    elif field == "unanswerable":
+        instruction = UNANSWERABLE_JUDGE_INSTRUCTION
     else:
         instruction = JUDGE_INSTRUCTION
     
@@ -88,7 +106,7 @@ async def judge(client: instructor.Instructor, question: str, system_answer: str
 
 
 async def main() -> None:
-    data = json.loads(open("results/eval_questions.json").read())
+    data = json.loads(open(f"{RESULTS_DIR}/eval_questions.json").read())
     questions = data["questions"]
 
     context = await fetch_context()
@@ -163,7 +181,7 @@ async def main() -> None:
         if r["correct"]:
             by_field[r["field"]][0] += 1
 
-    with open("results/eval_results.json", "w") as f:
+    with open(f"{RESULTS_DIR}/eval_results.json", "w") as f:
         json.dump({"accuracy": accuracy, "errors": n_errors, "by_field": {k: f"{c}/{t}" for k, (c, t) in by_field.items()}, "results": results}, f, indent=2)
 
     print(f"Accuracy: {accuracy:.1%} ({sum(r['correct'] for r in results)}/{len(results)})")

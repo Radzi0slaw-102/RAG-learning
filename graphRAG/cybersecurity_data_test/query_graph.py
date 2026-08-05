@@ -22,11 +22,14 @@ NEO4J_URI = os.environ.get("NEO4J_URI", "bolt://localhost:7687")
 NEO4J_USER = os.environ.get("NEO4J_USER", "neo4j")
 NEO4J_PASSWORD = os.environ.get("NEO4J_PASSWORD", "cocoindex")
 
+# 0 (or unset) means no cap - all CVE nodes are pulled into context
 MAX_CVE_NODES_IN_CONTEXT = int(os.environ.get("MAX_CVE_NODES_IN_CONTEXT", "10"))
 
-RETRIEVAL_QUERY = """
+_LIMIT_CLAUSE = "LIMIT $max_cve_nodes" if MAX_CVE_NODES_IN_CONTEXT > 0 else ""
+
+RETRIEVAL_QUERY = f"""
 MATCH (c:CVE)
-WITH c ORDER BY c.cve_id LIMIT $max_cve_nodes
+WITH c ORDER BY c.cve_id {_LIMIT_CLAUSE}
 OPTIONAL MATCH (c)-[:HAS_WEAKNESS]->(w:CWE)
 OPTIONAL MATCH (c)-[:AFFECTS]->(p:Product)
 OPTIONAL MATCH (c)-[r:MAPS_TO]->(t:Technique)
@@ -34,7 +37,7 @@ OPTIONAL MATCH (t)-[:MITIGATED_BY]->(m:Mitigation)
 RETURN c.cve_id AS cve_id, c.description AS description, c.cvss_score AS cvss_score,
        collect(DISTINCT w.cwe_id) AS cwe_ids,
        collect(DISTINCT p.product) AS products,
-       collect(DISTINCT {id: t.technique_id, name: t.name, tactic: t.tactic, mapping_type: r.mapping_type}) AS techniques,
+       collect(DISTINCT {{id: t.technique_id, name: t.name, tactic: t.tactic, mapping_type: r.mapping_type}}) AS techniques,
        collect(DISTINCT m.name) AS mitigations
 """
 
@@ -71,8 +74,9 @@ class Answer(pydantic.BaseModel):
 async def fetch_context() -> str:
     driver = AsyncGraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASSWORD))
     try:
+        params = {"max_cve_nodes": MAX_CVE_NODES_IN_CONTEXT} if MAX_CVE_NODES_IN_CONTEXT > 0 else {}
         async with driver.session() as session:
-            result = await session.run(RETRIEVAL_QUERY, max_cve_nodes=MAX_CVE_NODES_IN_CONTEXT)
+            result = await session.run(RETRIEVAL_QUERY, **params)
             records = [record.data() async for record in result]
     finally:
         await driver.close()

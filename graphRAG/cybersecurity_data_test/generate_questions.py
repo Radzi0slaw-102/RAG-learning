@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import os
 import random
 
 import instructor
@@ -18,7 +19,7 @@ import pydantic
 
 litellm.drop_params = True
 
-LLM_MODEL = "ollama/llama3.1:8b"
+LLM_MODEL = os.environ.get("LLM_MODEL", "ollama/llama3.1:8b")
 RANDOM_SEED = 42
 
 QUESTION_GEN_INSTRUCTION = """\
@@ -78,6 +79,30 @@ def _is_usable_answer(value: str) -> bool:
     return any(t.strip().lower() not in ("n/a", "n\\a", "none", "unknown") for t in tokens)
 
 
+UNANSWERABLE_QUESTION_GEN_INSTRUCTION = """\
+You write evaluation questions designed to test whether a GraphRAG system
+built on a cybersecurity knowledge graph correctly admits it has no
+information, instead of fabricating an answer.
+
+You will be given a real, publicly known subject (a vulnerability or
+ATT&CK technique) and the field being asked about. This subject is NOT
+present in the system's knowledge base - the system should have no data
+on it at all.
+
+Write ONE natural-language question that:
+   - asks about the given field for this subject, the same way a curious
+     threat hunter or analyst would ask about any other subject.
+   - avoids direct identifiers: describe the subject functionally or
+     contextually, the same way you would for any other question - do not
+     name it in a way that signals it is deliberately out of scope.
+   - does NOT hint in any way that the subject is missing, obscure, or
+     untracked - phrase it exactly as you would if you expected the
+     system to know the answer.
+
+Do not answer the question.
+"""
+
+
 async def generate_question(client: instructor.Instructor, fact: Fact) -> GeneratedQuestion:
     prompt = (
         f"Subject: {fact.subject_hint}\n"
@@ -89,6 +114,19 @@ async def generate_question(client: instructor.Instructor, fact: Fact) -> Genera
         response_model=GeneratedQuestion,
         messages=[
             {"role": "system", "content": QUESTION_GEN_INSTRUCTION},
+            {"role": "user", "content": prompt},
+        ],
+    )
+    return GeneratedQuestion.model_validate(result.model_dump())
+
+
+async def generate_unanswerable_question(client: instructor.Instructor, fact: Fact) -> GeneratedQuestion:
+    prompt = f"Subject: {fact.subject_hint}\nField being asked about: {fact.field}\n"
+    result = await client.chat.completions.create(
+        model=LLM_MODEL,
+        response_model=GeneratedQuestion,
+        messages=[
+            {"role": "system", "content": UNANSWERABLE_QUESTION_GEN_INSTRUCTION},
             {"role": "user", "content": prompt},
         ],
     )
@@ -111,7 +149,7 @@ async def generate_mitigation_question(client: instructor.Instructor, fact: Miti
     return GeneratedQuestion.model_validate(result.model_dump())
 
 
-def build_facts() -> tuple[list[Fact], list[MitigationCheckFact]]:
+def build_facts() -> tuple[list[Fact], list[MitigationCheckFact], list[Fact]]:
     cve_data = json.loads(open("data/cve_records.json").read())["cve_records"]
     attack_data = json.loads(open("data/attack_techniques.json").read())["techniques"]
     mapping_data = json.loads(open("data/kev_attack_mapping.json").read())["mapping_objects"]
@@ -214,12 +252,91 @@ def build_facts() -> tuple[list[Fact], list[MitigationCheckFact]]:
         print(f"Skipped {len(skipped)} fact(s) with no usable ground truth in the source data:")
         for s in skipped:
             print(f"  - {s}")
- 
-    return facts, mitigation_facts
+
+    unanswerable_facts = build_unanswerable_facts(cve_data, attack_data)
+
+    return facts, mitigation_facts, unanswerable_facts
+
+
+# real, well-known CVEs/techniques used as candidates for
+# "in scope of reality, but not in this dataset" questions
+_CANDIDATE_UNANSWERABLE_CVES = [
+    {
+        "cve_id": "CVE-2021-44228",
+        "hint": "the remote code execution vulnerability in Apache Log4j disclosed in December 2021, widely known as Log4Shell",
+    },
+    {
+        "cve_id": "CVE-2017-0144",
+        "hint": "the SMB remote code execution vulnerability in Microsoft Windows exploited by the EternalBlue tool and the WannaCry ransomware outbreak",
+    },
+    {
+        "cve_id": "CVE-2014-0160",
+        "hint": "the OpenSSL heartbeat extension buffer over-read vulnerability disclosed in 2014, widely known as Heartbleed",
+    },
+]
+
+_CANDIDATE_UNANSWERABLE_TECHNIQUES = [
+    {
+        "technique_id": "T1566",
+        "hint": "the ATT&CK technique covering phishing as an initial access method",
+    },
+    {
+        "technique_id": "T1059",
+        "hint": "the ATT&CK technique covering execution via command and scripting interpreters",
+    },
+]
+
+
+def build_unanswerable_facts(cve_data: list[dict], attack_data: list[dict]) -> list[Fact]:
+    # one deliberately unanswerable question per real field category
+    known_cve_ids = {r["cve_id"] for r in cve_data}
+    known_technique_ids = {t["technique_id"] for t in attack_data}
+
+    cve_candidate = next((c for c in _CANDIDATE_UNANSWERABLE_CVES if c["cve_id"] not in known_cve_ids), None)
+    technique_candidate = next((t for t in _CANDIDATE_UNANSWERABLE_TECHNIQUES if t["technique_id"] not in known_technique_ids), None)
+
+    if cve_candidate is None:
+        print("WARNING: all candidate CVEs for the unanswerable set are already in the dataset - skipping CVE-based unanswerable questions.")
+    if technique_candidate is None:
+        print("WARNING: all candidate techniques for the unanswerable set are already in the dataset - skipping technique-based unanswerable questions.")
+
+    facts: list[Fact] = []
+    if cve_candidate is not None:
+        hint = f"the vulnerability described as: \"{cve_candidate['hint']}\""
+        for field in ("CVSS score", "associated CWE weakness type(s)", "affected vendor/product"):
+            facts.append(Fact(
+                subject_id=cve_candidate["cve_id"],
+                subject_hint=hint,
+                field=field,
+                expected_answer="[no data - subject absent from this graph]",
+            ))
+    if technique_candidate is not None:
+        hint = f"the ATT&CK entry described as: \"{technique_candidate['hint']}\""
+        facts.append(Fact(
+            subject_id=technique_candidate["technique_id"],
+            subject_hint=hint,
+            field="ATT&CK tactic category",
+            expected_answer="[no data - subject absent from this graph]",
+        ))
+    if cve_candidate is not None and technique_candidate is not None:
+        facts.append(Fact(
+            subject_id=f"{cve_candidate['cve_id']}->{technique_candidate['technique_id']}",
+            subject_hint=f"the vulnerability described as: \"{cve_candidate['hint']}\"",
+            field="ATT&CK exploitation technique",
+            expected_answer="[no data - subject absent from this graph]",
+        ))
+    if technique_candidate is not None:
+        facts.append(Fact(
+            subject_id=technique_candidate["technique_id"],
+            subject_hint=f"the ATT&CK entry described as: \"{technique_candidate['hint']}\", and a candidate mitigation named 'Network Segmentation'",
+            field="mitigation effectiveness",
+            expected_answer="[no data - subject absent from this graph]",
+        ))
+    return facts
 
 
 async def main() -> None:
-    facts, mitigation_facts = build_facts()
+    facts, mitigation_facts, unanswerable_facts = build_facts()
     client = instructor.from_litellm(litellm.acompletion, mode=instructor.Mode.JSON)
     
     entries = []
@@ -244,6 +361,17 @@ async def main() -> None:
             "expected_answer": fact.expected_answer,
         })
         print(f"[{fact.subject_id}] mitigation check ({fact.candidate_mitigation}) -> {generated.question} -> {fact.expected_answer}")
+
+    for fact in unanswerable_facts:
+        generated = await generate_unanswerable_question(client, fact)
+        entries.append({
+            "subject_id": fact.subject_id,
+            "field": "unanswerable",
+            "reasoning": f"Real subject ({fact.field}) not present in this dataset - {generated.reasoning}",
+            "question": generated.question,
+            "expected_answer": "I don't know",
+        })
+        print(f"[{fact.subject_id}] unanswerable ({fact.field}) -> {generated.question}")
     
     with open("results/eval_questions.json", "w") as f:
         json.dump({"questions": entries}, f, indent=2)
