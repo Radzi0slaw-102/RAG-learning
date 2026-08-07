@@ -26,6 +26,8 @@ from schemas import (
 )
 
 litellm.drop_params = True
+LLM_REQUEST_TIMEOUT = int(os.environ.get("LLM_REQUEST_TIMEOUT", "1800"))
+LLM_API_BASE = os.environ.get("LLM_API_BASE")
 
 KG_DB = coco.ContextKey[neo4j.ConnectionFactory]("kg_db")
 LLM_MODEL = coco.ContextKey[str]("llm_model", detect_change=True)
@@ -44,7 +46,7 @@ async def coco_lifespan(builder: coco.EnvironmentBuilder) -> AsyncIterator[None]
             database=os.environ.get("NEO4J_DATABASE", "neo4j"),
         ),
     )
-    builder.provide(LLM_MODEL, os.environ.get("LLM_MODEL", "ollama/llama3.1:8b"))
+    builder.provide(LLM_MODEL, os.environ.get("LLM_MODEL", "openai/llama3.1:8b"))
     yield
 
 
@@ -64,6 +66,9 @@ async def extract_vulnerability_type(description: str) -> ExtractedVulnerability
     result = await client.chat.completions.create(
         model=coco.use_context(LLM_MODEL),
         response_model=ExtractedVulnerabilityType,
+        timeout=LLM_REQUEST_TIMEOUT,
+        api_base=LLM_API_BASE,
+        api_key="ollama",
         messages=[
             {"role": "system", "content": CVE_EXTRACTION_INSTRUCTION},
             {"role": "user", "content": description},

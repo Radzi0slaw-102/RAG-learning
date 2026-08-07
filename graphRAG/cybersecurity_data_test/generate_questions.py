@@ -17,9 +17,13 @@ import instructor
 import litellm
 import pydantic
 
+from data.unanswerable import UNANSWERABLE_CVES, UNANSWERABLE_TECHNIQUES
+
 litellm.drop_params = True
 
-LLM_MODEL = os.environ.get("LLM_MODEL", "ollama/llama3.1:8b")
+LLM_MODEL = os.environ.get("LLM_MODEL", "openai/llama3.1:8b")
+LLM_REQUEST_TIMEOUT = int(os.environ.get("LLM_REQUEST_TIMEOUT", "1800"))
+LLM_API_BASE = os.environ.get("LLM_API_BASE")
 RANDOM_SEED = 42
 
 QUESTION_GEN_INSTRUCTION = """\
@@ -112,10 +116,18 @@ async def generate_question(client: instructor.Instructor, fact: Fact) -> Genera
     result = await client.chat.completions.create(
         model=LLM_MODEL,
         response_model=GeneratedQuestion,
+        timeout=LLM_REQUEST_TIMEOUT,
+        api_base=LLM_API_BASE,
+        api_key="ollama",
         messages=[
             {"role": "system", "content": QUESTION_GEN_INSTRUCTION},
             {"role": "user", "content": prompt},
         ],
+        extra_body={
+            "options": {
+                "num_thread": 8
+            },
+        },
     )
     return GeneratedQuestion.model_validate(result.model_dump())
 
@@ -125,10 +137,18 @@ async def generate_unanswerable_question(client: instructor.Instructor, fact: Fa
     result = await client.chat.completions.create(
         model=LLM_MODEL,
         response_model=GeneratedQuestion,
+        timeout=LLM_REQUEST_TIMEOUT,
+        api_base=LLM_API_BASE,
+        api_key="ollama",
         messages=[
             {"role": "system", "content": UNANSWERABLE_QUESTION_GEN_INSTRUCTION},
             {"role": "user", "content": prompt},
         ],
+        extra_body={
+            "options": {
+                "num_thread": 8
+            },
+        },
     )
     return GeneratedQuestion.model_validate(result.model_dump())
 
@@ -141,10 +161,18 @@ async def generate_mitigation_question(client: instructor.Instructor, fact: Miti
     result = await client.chat.completions.create(
         model=LLM_MODEL,
         response_model=GeneratedQuestion,
+        timeout=LLM_REQUEST_TIMEOUT,
+        api_base=LLM_API_BASE,
+        api_key="ollama",
         messages=[
             {"role": "system", "content": YES_NO_QUESTION_GEN_INSTRUCTION},
             {"role": "user", "content": prompt},
         ],
+        extra_body={
+            "options": {
+                "num_thread": 8
+            },
+        },
     )
     return GeneratedQuestion.model_validate(result.model_dump())
 
@@ -258,50 +286,22 @@ def build_facts() -> tuple[list[Fact], list[MitigationCheckFact], list[Fact]]:
     return facts, mitigation_facts, unanswerable_facts
 
 
-# real, well-known CVEs/techniques used as candidates for
-# "in scope of reality, but not in this dataset" questions
-_CANDIDATE_UNANSWERABLE_CVES = [
-    {
-        "cve_id": "CVE-2021-44228",
-        "hint": "the remote code execution vulnerability in Apache Log4j disclosed in December 2021, widely known as Log4Shell",
-    },
-    {
-        "cve_id": "CVE-2017-0144",
-        "hint": "the SMB remote code execution vulnerability in Microsoft Windows exploited by the EternalBlue tool and the WannaCry ransomware outbreak",
-    },
-    {
-        "cve_id": "CVE-2014-0160",
-        "hint": "the OpenSSL heartbeat extension buffer over-read vulnerability disclosed in 2014, widely known as Heartbleed",
-    },
-]
-
-_CANDIDATE_UNANSWERABLE_TECHNIQUES = [
-    {
-        "technique_id": "T1566",
-        "hint": "the ATT&CK technique covering phishing as an initial access method",
-    },
-    {
-        "technique_id": "T1059",
-        "hint": "the ATT&CK technique covering execution via command and scripting interpreters",
-    },
-]
-
-
 def build_unanswerable_facts(cve_data: list[dict], attack_data: list[dict]) -> list[Fact]:
-    # one deliberately unanswerable question per real field category
     known_cve_ids = {r["cve_id"] for r in cve_data}
     known_technique_ids = {t["technique_id"] for t in attack_data}
 
-    cve_candidate = next((c for c in _CANDIDATE_UNANSWERABLE_CVES if c["cve_id"] not in known_cve_ids), None)
-    technique_candidate = next((t for t in _CANDIDATE_UNANSWERABLE_TECHNIQUES if t["technique_id"] not in known_technique_ids), None)
+    cve_candidates = [c for c in UNANSWERABLE_CVES if c["cve_id"] not in known_cve_ids]
+    technique_candidates = [t for t in UNANSWERABLE_TECHNIQUES if t["technique_id"] not in known_technique_ids]
+    technique_by_id = {t["technique_id"]: t for t in UNANSWERABLE_TECHNIQUES}
 
-    if cve_candidate is None:
+    if not cve_candidates:
         print("WARNING: all candidate CVEs for the unanswerable set are already in the dataset - skipping CVE-based unanswerable questions.")
-    if technique_candidate is None:
+    if not technique_candidates:
         print("WARNING: all candidate techniques for the unanswerable set are already in the dataset - skipping technique-based unanswerable questions.")
 
     facts: list[Fact] = []
-    if cve_candidate is not None:
+
+    for cve_candidate in cve_candidates:
         hint = f"the vulnerability described as: \"{cve_candidate['hint']}\""
         for field in ("CVSS score", "associated CWE weakness type(s)", "affected vendor/product"):
             facts.append(Fact(
@@ -310,7 +310,8 @@ def build_unanswerable_facts(cve_data: list[dict], attack_data: list[dict]) -> l
                 field=field,
                 expected_answer="[no data - subject absent from this graph]",
             ))
-    if technique_candidate is not None:
+
+    for technique_candidate in technique_candidates:
         hint = f"the ATT&CK entry described as: \"{technique_candidate['hint']}\""
         facts.append(Fact(
             subject_id=technique_candidate["technique_id"],
@@ -318,20 +319,31 @@ def build_unanswerable_facts(cve_data: list[dict], attack_data: list[dict]) -> l
             field="ATT&CK tactic category",
             expected_answer="[no data - subject absent from this graph]",
         ))
-    if cve_candidate is not None and technique_candidate is not None:
+
+    for cve_candidate in cve_candidates:
+        related_id = cve_candidate.get("related_technique_id")
+        if related_id is None:
+            continue
+        related_technique = technique_by_id.get(related_id)
+        if related_technique is None:
+            continue
+        if related_id not in known_technique_ids:
+            continue
         facts.append(Fact(
-            subject_id=f"{cve_candidate['cve_id']}->{technique_candidate['technique_id']}",
+            subject_id=f"{cve_candidate['cve_id']}->{related_id}",
             subject_hint=f"the vulnerability described as: \"{cve_candidate['hint']}\"",
             field="ATT&CK exploitation technique",
             expected_answer="[no data - subject absent from this graph]",
         ))
-    if technique_candidate is not None:
+
+    for technique_candidate in technique_candidates:
         facts.append(Fact(
             subject_id=technique_candidate["technique_id"],
             subject_hint=f"the ATT&CK entry described as: \"{technique_candidate['hint']}\", and a candidate mitigation named 'Network Segmentation'",
             field="mitigation effectiveness",
             expected_answer="[no data - subject absent from this graph]",
         ))
+
     return facts
 
 

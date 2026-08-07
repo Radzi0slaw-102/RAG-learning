@@ -18,6 +18,8 @@ from neo4j import AsyncGraphDatabase
 litellm.drop_params = True
 
 LLM_MODEL = os.environ.get("LLM_MODEL", "ollama/llama3.1:8b")
+LLM_REQUEST_TIMEOUT = int(os.environ.get("LLM_REQUEST_TIMEOUT", "1800"))
+LLM_API_BASE = os.environ.get("LLM_API_BASE")
 NEO4J_URI = os.environ.get("NEO4J_URI", "bolt://localhost:7687")
 NEO4J_USER = os.environ.get("NEO4J_USER", "neo4j")
 NEO4J_PASSWORD = os.environ.get("NEO4J_PASSWORD", "cocoindex")
@@ -114,6 +116,11 @@ async def answer_question(question: str, context: str) -> Answer:
             {"role": "system", "content": ANSWER_INSTRUCTION},
             {"role": "user", "content": f"Context:\n{context}\n\nQuestion: {question}"},
         ],
+        extra_body={
+            "options": {
+                "num_thread": 8
+            },
+        },
     )
     return Answer.model_validate(result.model_dump())
 

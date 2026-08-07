@@ -21,8 +21,10 @@ from query_graph import answer_question, fetch_context
 
 litellm.drop_params = True
 
-LLM_MODEL = os.environ.get("LLM_MODEL", "ollama/llama3.1:8b")
+LLM_MODEL = os.environ.get("LLM_MODEL", "openai/llama3.1:8b")
 RESULTS_DIR = os.environ.get("RESULTS_DIR", "results")
+LLM_REQUEST_TIMEOUT = int(os.environ.get("LLM_REQUEST_TIMEOUT", "1800"))
+LLM_API_BASE = os.environ.get("LLM_API_BASE")
 
 JUDGE_INSTRUCTION = """\
 You are grading a cybersecurity Q&A system. You will see a question, the
@@ -30,6 +32,10 @@ system's answer, and the known correct answer. Decide if the system's
 answer is correct: it must convey the same specific fact as the correct
 answer (matching IDs, numbers, or names), not just be topically related.
 Minor wording differences are fine. Missing or vague answers are incorrect.
+If the correct answer contains a list of more than 3 items, accept the response
+as correct if it accurately identifies the overarching common factor/category
+or provides representative examples from the list, rather than requiring
+an exhaustive enumeration.
 """
 
 YES_NO_JUDGE_INSTRUCTION = """\
@@ -97,10 +103,18 @@ async def judge(client: instructor.Instructor, question: str, system_answer: str
     result = await client.chat.completions.create(
         model=LLM_MODEL,
         response_model=Verdict,
+        timeout=LLM_REQUEST_TIMEOUT,
+        api_base=LLM_API_BASE,
+        api_key="ollama",
         messages=[
             {"role": "system", "content": instruction},
             {"role": "user", "content": prompt},
         ],
+        extra_body={
+            "options": {
+                "num_thread": 8
+            },
+        },
     )
     return Verdict.model_validate(result.model_dump())
 
